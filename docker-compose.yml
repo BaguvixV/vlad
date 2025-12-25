@@ -1,0 +1,63 @@
+# - "web"         : Web service (Apache/PHP)
+# - "database"    : Database service (MySQL)
+# - "phpmyadmin"  : phpMyAdmin service for managing the database
+
+services:
+  # Web Application Service | Runs a PHP/Apache server
+  web:
+    container_name: vlad_lamp_webapp
+    # image: baguvixx/php-apache-pdo-mysql:v2
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 8881:80
+    volumes:
+      - ./public:/var/www/html        # Apache serves only public/
+      - ./src:/var/www/src            # optional: keep logic outside web root
+    restart: on-failure
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - lamp_network
+
+  # MySQL Database Service | Provides the database for the application
+  database:
+    container_name: vlad_lamp_database
+    image: mysql:8.4
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ALLOW_EMPTY_PASSWORD: '1' # ONLY FOR LOCAL DEV, NEVER FOR PRODUCTION
+    volumes:
+      - "./src/migrations:/docker-entrypoint-initdb.d"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - lamp_network
+
+  # phpMyAdmin Service | Web-based tool for managing the database
+  phpmyadmin:
+    container_name: vlad_lamp_phpmyadmin
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: database
+      PMA_PORT: ${DB_PORT}
+    ports:
+      - 8880:80
+    networks:
+      - lamp_network
+
+# Custom network for all services to communicate with each other
+networks:
+  lamp_network:
+    driver: bridge

@@ -1,0 +1,9 @@
+# This directive enables the mod_rewrite engine, which allows to use rules to modify or redirect requests
+RewriteEngine On
+
+# If the request is for an existing file or directory, serve it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Otherwise, redirect to index.php
+RewriteRule ^(.*)$ index.php [QSA,L]

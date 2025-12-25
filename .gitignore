@@ -1,0 +1,17 @@
+# Ignore only the file named .env
+.env
+
+# Ignore all files that end in .log  |  Examples: error.log, app.log, debug.log → all ignored
+*.log
+
+# Ignore all directories with the name test
+test/
+
+# Ignore all files that end in .test
+*.test
+
+# Ignore only the file named exactly README.test.md
+README.test.md
+
+# Ignore vscode directory
+.vscode
