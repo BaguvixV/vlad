@@ -6,4 +6,6 @@ declare(strict_types= 1);
 const BASE_PATH = __DIR__ . '/../';
 
 require BASE_PATH . 'src/Core/functions.php';
+require core(path: 'autoloader.php');
+require core(path: 'Database.php');
 require core(path: 'Router.php');

@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 // $router->get('/4dm1n', 'controllers/admin.php');
 // $router->get('/home', 'controllers/home.php');
 // $router->get('/products', 'controllers/products.php');

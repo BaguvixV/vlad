@@ -5,9 +5,9 @@
 *.log
 
 # Ignore all directories with the name test
-test/
+*test/
 
-# Ignore all files that end in .test
+# Ignore all files that ens with .test
 *.test
 
 # Ignore only the file named exactly README.test.md
