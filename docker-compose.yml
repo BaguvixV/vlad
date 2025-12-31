@@ -16,7 +16,7 @@ services:
       - 8881:80
     volumes:
       - ./public:/var/www/html        # Apache serves only public/
-      - ./src:/var/www/src            # optional: keep logic outside web root
+      - ./src:/var/www/src            # PHP app logic outside web root
     restart: on-failure
     depends_on:
       database:
@@ -32,7 +32,8 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ALLOW_EMPTY_PASSWORD: '1' # ONLY FOR LOCAL DEV, NEVER FOR PRODUCTION
+      # MYSQL_ALLOW_EMPTY_PASSWORD: '1'   # ONLY FOR LOCAL DEV, NEVER FOR PRODUCTION
+      MYSQL_ALLOW_EMPTY_PASSWORD: '0'
     volumes:
       - "./src/migrations:/docker-entrypoint-initdb.d"
     healthcheck:

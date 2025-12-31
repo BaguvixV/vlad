@@ -1,3 +1,5 @@
+# File context: Simple routing - any non-file request goes to index.php
+
 # This directive enables the mod_rewrite engine, which allows to use rules to modify or redirect requests
 RewriteEngine On
 
@@ -6,4 +8,5 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
 # Otherwise, redirect to index.php
-RewriteRule ^(.*)$ index.php [QSA,L]
+# RewriteRule ^(.*)$ index.php [QSA,L]
+RewriteRule ^ index.php [L]

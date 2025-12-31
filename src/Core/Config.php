@@ -13,12 +13,12 @@ class Config {
       'password' => getenv('DB_PASSWORD'),
     ];
   }
-  public static function website(): array {
-    return [
-      'name' => getenv('WEBSITE_NAME') ?? "MyWebsite.com",
-      'adminName' => getenv('WEBSITE_ADMIN_NAME'),
-      'adminEmail' => getenv('WEBSITE_ADMIN_EMAIL'),
-      'adminPassword' => getenv('WEBSITE_ADMIN_PASSWORD'),
-    ];
-  }
+  // public static function website(): array {
+  //   return [
+  //     'name' => getenv('WEBSITE_NAME') ?? "MyWebsite.com",
+  //     'adminName' => getenv('WEBSITE_ADMIN_NAME'),
+  //     'adminEmail' => getenv('WEBSITE_ADMIN_EMAIL'),
+  //     'adminPassword' => getenv('WEBSITE_ADMIN_PASSWORD'),
+  //   ];
+  // }
 }
