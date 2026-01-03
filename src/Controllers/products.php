@@ -1,22 +1,37 @@
 <?php
 
-use Core\Database;
-use Core\Config;
-
-// Later this will be placed in container to prevent database connection dublication in each controller file
-$databaseConfig = Config::database();
-$pdo = new Database(
-  host: $databaseConfig['host'],
-  port: $databaseConfig['port'],
-  database: $databaseConfig['dbname'],
-  charset: $databaseConfig['charset'],
-  username: $databaseConfig['username'],
-  password: $databaseConfig['password']
-);
-
-$pdo->getConnection();
+use Models\Product;
 
 
-renderView(path: 'products/index.view.php', data: [
+$products = [];
+
+$product = new Product();
+
+
+$product->title = 'laptop';
+$product->description = 'high-end performance laptop';
+$product->price = 1500;
+
+$products[] = $product;
+
+
+$product->title = 'pc';
+$product->description = 'mid-level performance PC';
+$product->price = 667;
+
+$products[] = $product;
+
+$product->title = 'tablet';
+$product->description = 'regular tablet for everyday tasks';
+$product->price = 500;
+
+$products[] = $product;
+
+
+renderView(
+  path: 'products/index.view.php',
+  data: [
    'heading' => 'Product list',
-]);
+   'products' => $products
+  ]
+);

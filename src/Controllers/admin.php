@@ -1,22 +1,39 @@
 <?php
 
-use Core\Database;
-use Core\Config;
-
-// Later this will be placed in container to prevent database connection dublication in each controller file
-$databaseConfig = Config::database();
-$pdo = new Database(
-  host: $databaseConfig['host'],
-  port: $databaseConfig['port'],
-  database: $databaseConfig['dbname'],
-  charset: $databaseConfig['charset'],
-  username: $databaseConfig['username'],
-  password: $databaseConfig['password']
-);
-
-$pdo->getConnection();
+use Models\User;
 
 
-renderView(path: 'admin/index.view.php', data: [
+$users = [];
+
+$user = new User();
+
+
+$user->name = 'jesse';
+$user->surname = 'pinkman';
+$user->age = 23;
+$user->email = 'pinkman@gmail.com';
+
+$users[] = $user;
+
+$user->name = 'john';
+$user->surname = 'silverhand';
+$user->age = 2077;
+$user->email = 'silverhand@gmail.com';
+
+$users[] = $user;
+
+$user->name = 'jarvis';
+$user->surname = 'smith';
+$user->age = 45;
+$user->email = 'smith@gmail.com';
+
+$users[] = $user;
+
+
+renderView(
+  path: 'admin/index.view.php',
+  data: [
    'heading' => 'Admin page',
-]);
+   'users' => $users
+  ]
+);

@@ -1,0 +1,16 @@
+# Note: For production avoid RC and USE ONLY STABLE versions
+FROM php:8.4-rc-apache-bookworm
+
+WORKDIR /var/www/html
+
+COPY config/php.ini /usr/local/etc/php/conf.d/custom.ini
+
+COPY config/apache-app.conf /etc/apache2/conf-available/app.conf
+
+RUN apt-get update \
+    && docker-php-ext-install pdo pdo_mysql \
+    && a2enmod rewrite
+
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html \
+    && a2enconf app

@@ -2,39 +2,30 @@
 
 namespace Core;
 
+use Core\Config;
 use PDO;
 
-final class Database {
+class Database {
   protected ?PDO $connection = null;
 
+  public function __construct() {
+    $conf = Config::database();
 
-  public function __construct(
-    private string $host,
-    private int $port,
-    private string $database,
-    private string $charset,
-    private string $username,
-    private string $password
-  ) {}
-
-
-  public function getConnection(): PDO
-  {
     if ($this->connection === null) {
 
       $dsn = sprintf(
           'mysql:host=%s;port=%s;dbname=%s;charset=%s',
-          $this->host,
-          $this->port,
-          $this->database,
-          $this->charset
-      ); 
+          $conf['host'],
+          $conf['port'],
+          $conf['dbname'],
+          $conf['charset']
+      );
 
       try {
         $this->connection = new PDO(
           dsn: $dsn,
-          username: $this->username,
-          password: $this->password,
+          username: $conf['username'],
+          password: $conf['password'],
           options: [
             // Set the PDO error mode to exception
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -44,7 +35,9 @@ final class Database {
         throw new \RuntimeException(message: 'Database connection failed', previous: $e);
       }
     }
+  }
 
+  public function getConnection(): ?PDO {
     return $this->connection;
   }
 

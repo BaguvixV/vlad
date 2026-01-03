@@ -4,7 +4,7 @@
 
 services:
   # Web Application Service | Runs a PHP/Apache server
-  web:
+  php:
     container_name: vlad_lamp_webapp
     # image: baguvixx/php-apache-pdo-mysql:v2
     build:
@@ -23,6 +23,28 @@ services:
         condition: service_healthy
     networks:
       - lamp_network
+    profiles: ['php83']
+
+  php84:
+    container_name: vlad_lamp_webapp_php84
+    # image: baguvixx/php-apache-pdo-mysql:v2
+    build:
+      context: .
+      dockerfile: Dockerfile.php84
+    env_file:
+      - .env
+    ports:
+      - 8881:80
+    volumes:
+      - ./public:/var/www/html        # Apache serves only public/
+      - ./src:/var/www/src            # PHP app logic outside web root
+    restart: on-failure
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - lamp_network
+    profiles: ['php84']
 
   # MySQL Database Service | Provides the database for the application
   database:
