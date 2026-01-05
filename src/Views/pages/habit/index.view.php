@@ -10,7 +10,7 @@
 
   <?php require view(path: 'layouts/navigation/index.view.php'); ?>
 
-  <?php require view(path: 'layouts/main/about.view.php'); ?>
+  <?php require view(path: 'layouts/main/habit.view.php'); ?>
 
   <?php require view(path: 'layouts/footer/index.view.php'); ?>
 

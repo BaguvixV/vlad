@@ -14,8 +14,8 @@ if ($uri === '/') {
   require controller(path: 'home.php');
 } else if ($uri === '/about') { 
   require controller(path: 'about.php');
-} else if ($uri === '/products') { 
-  require controller(path: 'products.php');
+} else if ($uri === '/habits') { 
+  require controller(path: 'habit.php');
 } else if ($uri === '/4dm1n') { 
   require controller(path: 'admin.php');
 } else {

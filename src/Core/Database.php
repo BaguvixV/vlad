@@ -2,42 +2,49 @@
 
 namespace Core;
 
-use Core\Config;
 use PDO;
+use PDOException;
+use RuntimeException;
+
 
 class Database {
-  protected ?PDO $connection = null;
+  private ?PDO $connection = null;
 
-  public function __construct() {
-    $conf = Config::database();
-
-    if ($this->connection === null) {
-
-      $dsn = sprintf(
-          'mysql:host=%s;port=%s;dbname=%s;charset=%s',
-          $conf['host'],
-          $conf['port'],
-          $conf['dbname'],
-          $conf['charset']
-      );
-
-      try {
-        $this->connection = new PDO(
-          dsn: $dsn,
-          username: $conf['username'],
-          password: $conf['password'],
-          options: [
-            // Set the PDO error mode to exception
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-          ]
-        );
-      } catch (\PDOException $e) {
-        throw new \RuntimeException(message: 'Database connection failed', previous: $e);
-      }
-    }
+  public function __construct(private array $config) {
+    // intentionaly empty
   }
 
-  public function getConnection(): ?PDO {
+  public function connect(): ?PDO
+  {
+    if ($this->connection !== null) {
+      return $this->connection;
+    }
+
+    $dsn = sprintf(
+        'mysql:host=%s;port=%s;dbname=%s;charset=%s',
+        $this->config['host'],
+        $this->config['port'],
+        $this->config['dbname'],
+        $this->config['charset']
+    );
+
+    try {
+      $this->connection = new PDO(
+        dsn: $dsn,
+        username: $this->config['username'],
+        password: $this->config['password'],
+        options: [
+          // Set the PDO error mode to exception
+          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        ]
+      );
+    } catch (PDOException $e) {
+      throw new RuntimeException(
+        message: 'Database connection failed',
+        previous: $e
+      );
+    }
+
     return $this->connection;
   }
 

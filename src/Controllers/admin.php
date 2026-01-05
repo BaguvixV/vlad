@@ -1,33 +1,14 @@
 <?php
 
+use Core\Config;
+use Core\Database;
 use Models\User;
 
+$db = new Database(config: Config::database());
+$pdo = $db->connect();
 
-$users = [];
-
-$user = new User();
-
-
-$user->name = 'jesse';
-$user->surname = 'pinkman';
-$user->age = 23;
-$user->email = 'pinkman@gmail.com';
-
-$users[] = $user;
-
-$user->name = 'john';
-$user->surname = 'silverhand';
-$user->age = 2077;
-$user->email = 'silverhand@gmail.com';
-
-$users[] = $user;
-
-$user->name = 'jarvis';
-$user->surname = 'smith';
-$user->age = 45;
-$user->email = 'smith@gmail.com';
-
-$users[] = $user;
+$userModel = new User(connection: $pdo);
+$users = $userModel->read();
 
 
 renderView(

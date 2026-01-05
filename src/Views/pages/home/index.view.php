@@ -6,10 +6,12 @@
 </head>
 <body>
 
-  <?php require view(path: 'layouts/header.view.php'); ?>
+  <?php require view(path: 'layouts/header/index.view.php'); ?>
 
-  <?php require view(path: 'layouts/navigation.view.php'); ?>
+  <?php require view(path: 'layouts/navigation/index.view.php'); ?>
 
-  <?php require view(path: 'layouts/footer.view.php'); ?>
+  <?php require view(path: 'layouts/main/home.view.php'); ?>
+
+  <?php require view(path: 'layouts/footer/index.view.php'); ?>
 
 </body>

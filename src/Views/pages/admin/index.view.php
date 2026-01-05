@@ -6,19 +6,12 @@
 </head>
 <body>
 
-  <?php require view(path: 'layouts/header.view.php'); ?>
+  <?php require view(path: 'layouts/header/index.view.php'); ?>
 
-  <?php require view(path: 'layouts/navigation.view.php'); ?>
+  <?php require view(path: 'layouts/navigation/index.view.php'); ?>
 
-  <h2>User list</h2>
-  <?php foreach($users as $user): ?>
-    <p>Name: <?= $user->name; ?></p>
-    <p>Surname: <?= $user->surname; ?></p>
-    <p>Age: <?= $user->age; ?></p>
-    <p>Email: <?= $user->email; ?></p>
-    <br>
-  <?php endforeach; ?>
+  <?php require view(path: 'layouts/main/admin.view.php'); ?>
 
-  <?php require view(path: 'layouts/footer.view.php'); ?>
+  <?php require view(path: 'layouts/footer/index.view.php'); ?>
 
 </body>

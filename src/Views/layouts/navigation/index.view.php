@@ -7,7 +7,7 @@
       <a href="/about">About</a>
     </li>
     <li>
-      <a href="/products">Product List</a>
+      <a href="/habits">Habit Stats</a>
     </li>
     <li>
       <a href="/4dm1n">Admin</a>

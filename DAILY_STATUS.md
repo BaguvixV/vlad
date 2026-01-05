@@ -20,28 +20,57 @@
 - ❌ Missed (intentionally skipped)
 
 
+## 📌 08/01/2026
 
-## 📌 06/01/2026
-
-**Focus:** Auth forms & validation architecture  
+**Focus:** User login, dashboard display & validation architecture
 **Time:** ~2-3h
 
 ```bash
-- 📌 Draft basic user authentication and posts forms
+- 📌 Implement user login
+- 📌 Extend FormValidation.php with login validation rules
+- 📌 Display logged-in user info on dashboard
+```
+
+
+## 📌 07/01/2026
+
+**Focus:** User registration, password handling & validation architecture
+**Time:** ~2-3h
+
+```bash
+- 📌 Implement user registration
+- 📌 Generate and store password hash on user creation
+- 📌 Extend FormValidation.php with register validation rules
+```
+
+
+
+## 📌 06/01/2026
+
+**Focus:** Authentication forms & validation architecture  
+**Time:** ~1h
+
+```bash
+- 📌 Draft authentication and posts-related forms
 - 📌 Create universal Validation.php
 - 📌 Create FormValidation.php form validation inside Controllers/forms
 ```
 
 
 
-## 🛠️ 05/01/2026
+## ✅ 05/01/2026
 
-**Focus:** Database & placeholder content
-**Time:** ~1.5h
+**Focus:** Refactor models, fix database connection and display DB data on website
+**Time:** ~4h
 
 ```bash
-- 📌 Create User and Post SQL tables with Lorem Ipsum placeholder values
-- 📌 Fill about page and homepage with Lorem Ipsum placeholder content
+- Remove database logic from Core\Models; will be handled via container configuration later
+- Rename Post model to Habit
+- Create User and Habit SQL tables with placeholder data
+- Store SQL files in src/migrations
+- Display users and habits on website
+- Add placeholder content to About page and Homepage
+- Minor folder structure refactor
 ```
 
 
