@@ -3,7 +3,35 @@
 ## 📝 Description
 This is a small, almost-daily pet-project (~1.5 hours per session) created to practice, experiment, and showcase my software development experience.
 
-The project will evolve incrementally and may change direction as ideas are tested and refined.
+The project is not intended to be a polished product.
+It exists to demonstrate learning, decision-making, and clean engineering rather than feature richness or visual design.
+
+---
+
+## 🎯 Learning-First Philosophy
+
+This project follows a strict rule:
+
+> **Every feature must exist to support learning, not novelty or polish.**
+
+### Hard Scope Lock
+
+#### Allowed features:
+- Authentication (register/login)
+- CRUD habits
+- Daily checkmark
+- Weekly and monthly summary
+
+#### Forbidden features:
+- Dark mode
+- Animations
+- Notifications
+- Mobile-first polish
+- AI suggestions
+- Gamification
+
+> If it is not teaching a **core skills**, then it's not necessary.
+
 
 ## 🛠️ Tech Stack
 - HTML
