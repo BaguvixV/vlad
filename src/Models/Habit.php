@@ -53,10 +53,10 @@ class Habit {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}";
 
-    $stmt = $this->connection->prepare($sql);
+    $stmt = $this->connection->prepare(query: $sql);
     $stmt->execute();
 
-    return $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
   }
 
 }

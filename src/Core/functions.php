@@ -17,8 +17,12 @@ function core(string $path): string {
   return base_path(path: "src/Core/{$path}");
 }
 
-function view(string $path): string {
-  return base_path(path: "src/Views/{$path}");
+function controller($path): string {
+  return base_path(path: "src/Http/Controllers/{$path}");
+}
+
+function template(string $path): string {
+  return base_path(path: "src/templates/{$path}");
 }
 
 /**
@@ -30,7 +34,7 @@ function view(string $path): string {
  *
  * @throws Exception if the $path is empty
  */
-function renderView(string $path, array $data = []) {
+function renderTemplate(string $path, array $data = []): void {
   // Ensure a valid view path is provided
   if (empty($path)) {
     throw new Exception(message: "View path must not be empty.");
@@ -42,9 +46,23 @@ function renderView(string $path, array $data = []) {
 
   // Include the resolved view file
   // view() is assumed to return the full file path for the view
-  require view(path:  "pages/{$path}");
+  require template(path:  "pages/{$path}");
 }
 
-function controller($path): string {
-  return base_path(path: "src/Controllers/{$path}");
+// Function to handle routing, the uri to one of these routes
+function routeToController($uri, $routes) {
+  if (array_key_exists(key: $uri, array: $routes)) {
+    require $routes[$uri];
+  } else {
+    abort();
+  }
+}
+
+// Option to abort wit the give status code
+function abort($status = 404) {
+  http_response_code(response_code: $status);
+
+  require template(path: "error/{$status}.view.php");
+
+  die();
 }
