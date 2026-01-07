@@ -43,15 +43,15 @@
 ```
 
 
-## 📌 07/01/2026
+## 🛠️ 07/01/2026
 
 **Focus ~2-3h:** User registration, Password handling and Validation architecture
 
 ```bash
-- 📌 Implement user registration flow
-- 📌 Create Response model (404, 405, etc.)
-- 📌 Generate and store password hash on user creation
-- 📌 Extend Requests\FormValidation.php and Requests\Register with register-specifyc validation rules
+- 07/01 ✅ Create Response model (400, 401, 403, 404, 405)
+- 07/01 🛠️ Implement user registration flow
+- 07/01 🛠️ Extend Requests\FormValidation.php and Requests\Register with register-specifyc validation rules
+- 07/01 📌 Generate and store password hash on user creation
 ```
 
 
