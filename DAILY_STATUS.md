@@ -43,15 +43,18 @@
 ```
 
 
-## 🛠️ 07/01/2026
+## 🛠️ 07/01/2026 (Focus: 1h 38min) | 🛠️ 08/01/2026 (Focus: 0h 0min)
 
 **Focus ~2-3h:** User registration, Password handling and Validation architecture
 
 ```bash
 - 07/01 ✅ Create Response model (400, 401, 403, 404, 405)
-- 07/01 🛠️ Implement user registration flow
-- 07/01 🛠️ Extend Requests\FormValidation.php and Requests\Register with register-specifyc validation rules
-- 07/01 📌 Generate and store password hash on user creation
+- 08/01 ✅ Rename Validator model to Sanitizer
+- 08/01 🛠️ Implement input sanitization and form-specifyc validation
+- 07/01 🛠️ 08/01 🛠️ Implement user registration flow
+- 07/01 🛠️ 08/01 🛠️ Extend Requests\FormValidation.php and Requests\Register with register-specifyc validation rules
+- 08/01 🛠️ Preserve the sanitized $_POST input into $old on validation failure to prevent re-entering valid data
+- 07/01 📌 08/01 ✅ Generate and store password hash on user creation
 ```
 
 
