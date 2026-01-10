@@ -4,9 +4,9 @@ $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
 
 renderTemplate(
-  path: 'about/index.view.php',
+  path: 'auth/register/index.view.php',
   data: [
-   'heading' => 'About page',
+   'heading' => 'Register Page',
    'loggedInUserEmail' => $loggedInUserEmail
   ]
 );

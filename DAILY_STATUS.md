@@ -31,7 +31,7 @@
 
 
 
-## 📌 08/01/2026
+## 📌 11/01/2026 - 12/01/2026 (Focus: Xh Ymin)
 
 **Focus ~2-3h:** User login, Dashboard display and Validation architecture
 
@@ -43,18 +43,59 @@
 ```
 
 
-## 🛠️ 07/01/2026 (Focus: 1h 38min) | 🛠️ 08/01/2026 (Focus: 0h 0min)
+## 🛠️ 07/01/26 - 09/01/26 (Focus: 12h 9min)
 
-**Focus ~2-3h:** User registration, Password handling and Validation architecture
+- feat: User registration, input sanitization, form-specific validation, and password security
 
-```bash
-- 07/01 ✅ Create Response model (400, 401, 403, 404, 405)
+```md
+### 🛠️ Overall Progress:
+- 09/01 ✅ Create user dashboard route with default forbidden 403 and redirect after registration
+- 09/01 ✅ Display dashboard page for existing user session
+- 09/01 ✅ Hide register and login navitaion links when user is registered/logged-in
+- 09/01 ✅ Enchance user migrations SQL table
+- 09/01 ✅ Convert sanitized age input to strict integer
 - 08/01 ✅ Rename Validator model to Sanitizer
-- 08/01 🛠️ Implement input sanitization and form-specifyc validation
-- 07/01 🛠️ 08/01 🛠️ Implement user registration flow
-- 07/01 🛠️ 08/01 🛠️ Extend Requests\FormValidation.php and Requests\Register with register-specifyc validation rules
-- 08/01 🛠️ Preserve the sanitized $_POST input into $old on validation failure to prevent re-entering valid data
-- 07/01 📌 08/01 ✅ Generate and store password hash on user creation
+- 08/01 🛠️ 09/01 ✅ Implement input sanitization and form-specific validation
+- 07/01 🛠️ 08/01 🛠️ 09/01 ✅ Implement full user registration flow
+- 07/01 🛠️ 08/01 🛠️ 09/01 ✅ Extend Requests\AuthFormValidation.php and Requests\Register with register-specific validation rules
+- 08/01 🛠️ 09/01 ✅ Preserve sanitized $_POST input in $old on validation failure to prevent re-entering valid data
+- 07/01 📌 08/01 ✅ Generate and store password hash (after raw password validation) on user creation
+- 07/01 ✅ Create Response model for HTTP status codes (400, 401, 403, 404, 405)
+```
+
+### 🛠️ Daily Breakdown
+```md
+#### 09/01/26 (Focus: 7h 23min)
+
+- ✅ Implement input sanitization and form-specific validation
+- ✅ Implement full user registration flow
+- ✅ Rename FormValidation.php to AuthFormValidation.php
+- ✅ Extend Requests\AuthFormValidation.php and Requests\Register with register-specific validation rules
+- ✅ Preserve sanitized $_POST input in $old on validation failure to prevent re-entering valid data
+- ✅ Convert sanitized age input to strict integer
+- ✅ Create user dashboard route with default forbidden 403 and redirect after registration
+- ✅ Display dashboard page for existing user session
+- ✅ Hide register and login navitaion links when user is registered/logged-in
+- ✅ Enchance user migrations SQL table
+```
+
+```md
+#### 🛠️ 08/01/26 (Focus: 3h 08min)
+
+- ✅ Rename Validator model to Sanitizer
+- 🛠️ Implement input sanitization and form-specific validation
+- 🛠️ Implement user registration flow
+- 🛠️ Extend Requests\FormValidation.php and Requests\Register with register-specific validation rules
+- 🛠️ Preserve the sanitized $_POST input in $old on validation failure to prevent re-entering valid data
+- ✅ Generate and store password hash (after raw password validation) on user creation
+```
+
+```md
+#### 🛠️ 07/01/26 (Focus: 1h 38min)
+
+- 🛠️ Implement user registration flow
+- 🛠️ Extend Requests\FormValidation.php and Requests\Register with register-specific validation rules
+- 📌 Generate and store password hash (after raw password validation) on user creation
 ```
 
 

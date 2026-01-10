@@ -2,11 +2,22 @@
 
 namespace Http\Requests;
 
-use Http\Requests\FromValidation;
+use Http\Requests\AuthFromValidation;
 
 
-final class RegisterForm extends FromValidation {
-  public function register($name, $surname, $age, $email, $password, $rePassword, $phone): bool {
+final class RegisterForm extends AuthFromValidation {
+
+  public function register(
+                        ?string $name,
+                        ?string $surname,
+                        ?int $age,
+                        ?string $email,
+                        ?string $dbEmail,
+                        ?string $password,
+                        ?string $rePassword,
+                        ?string $phone,
+                        ?string $dbPhone): bool {
+
     $this->validateName(name: $name);
     $this->validateSurname(surname: $surname);
     $this->validateAge(age: $age);
@@ -15,10 +26,10 @@ final class RegisterForm extends FromValidation {
     $this->validateRePassword(password: $password, rePassword: $rePassword);
     $this->validatePhone(phone: $phone);
 
-    // $this->checkIfEmailExists(email: $email);
-    // $this->checkIfPhoneExists(phone: $phone);
+    $this->checkIfEmailExists(email: $dbEmail);
+    $this->checkIfPhoneExists(phone: $dbPhone);
 
-    return true;
+    return empty($this->errors);
   }
 
 }
