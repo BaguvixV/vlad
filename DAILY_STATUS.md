@@ -19,28 +19,42 @@
 - 🛠️ Working on (learning / partial progress)
 - ✅ Completed (shipped / commited)
 - ❌ Missed (intentionally skipped)
+- 🚨 Important note
 
 
 ## 📌 Unorganized TODO list:
 
 ```bash
-> (1) empty TODO placeholder
-> (2) empty TODO placeholder
+> (1) Add SQL typo and duplicate entry error display
+> (2) Prevent $_SERVER['PHP_SELF'] exploits
 > (3) empty TODO placeholder
 ```
 
 
 
-## 📌 11/01/2026 - 12/01/2026 (Focus: Xh Ymin)
+## 📌 10/01/2026 - 11/01/2026
 
-**Focus ~2-3h:** User login, Dashboard display and Validation architecture
+**Focus:** User login, Dashboard display and Validation architecture
 
 ```bash
-- 📌 Implement user login flow
-- 📌 Extend Requests\FormValidation.php and Requests\Login with login-specifyc validation rules
-- 📌 Display authenticated user info on dashboard
-- 📌 Implement 403 Forbidden HTTP status handling
+- 10/01 🛠️ Implement user login flow
+- 10/01 ✅ Add logout feature for users who are logged-in
+- 10/01 🛠️ Extend Requests\FormValidation.php and Requests\Login with login-specifyc validation rules
+- 10/01 🛠️ Display authenticated user created habits on dashboard
+- 10/01 🚨 Caught myself on thinking about wrong placement for checking functions/methods inside RegisterForm and LoginForm
 ```
+
+### 🛠️ Daily Breakdown
+```md
+#### 10/01/26 (Focus: 4h 22min)
+
+- 🛠️ Implement user login flow
+- ✅ Add logout feature for users who are logged-in
+- 🛠️ Extend Requests\FormValidation.php and Requests\Login with login-specifyc validation rules
+- 🛠️ Display authenticated user created habits on dashboard
+- 🚨 Caught myself on thinking about wrong placement for checking functions/methods inside RegisterForm and LoginForm
+```
+
 
 
 ## 🛠️ 07/01/26 - 09/01/26 (Focus: 12h 9min)
