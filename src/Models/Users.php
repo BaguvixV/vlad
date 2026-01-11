@@ -97,8 +97,8 @@ class Users {
     //
   }
 
-  
-  public function findUserByEmail(?string $localEmail): array {
+
+  public function findUserByEmail(?string $localEmail): ?array {
     $table = self::TABLE;
     $sql = "SELECT *
             FROM {$table}
@@ -109,10 +109,13 @@ class Users {
     $stmt->bindParam(':email', $localEmail);
     $stmt->execute();
 
-    return $stmt->fetch(mode: PDO::FETCH_ASSOC);
+    $output = $stmt->fetch(mode: PDO::FETCH_ASSOC);
+
+    return $output ? $output : null;
   }
 
 
+  // TODO: Remove this method (also with linked ones in register controller store) because of his redundancy
   public function findUserByPhone(?string $localPhone): array {
     $table = self::TABLE;
     $sql = "SELECT *
@@ -128,7 +131,7 @@ class Users {
   }
 
 
-  // public function findUsersEmail(?string $localEmail): ?string {
+  // TODO: Remove this method (also with linked ones in register controller store) because of his redundancy
   public function findUsersEmail(?string $localEmail) {
     $table = self::TABLE;
     $sql = "SELECT email
@@ -144,7 +147,7 @@ class Users {
   }
 
 
-  // public function findUsersPhone(?string $localPhone): ?string {
+  // TODO: Remove this method (also with linked ones in register controller store) because of his redundancy
   public function findUsersPhone(?string $localPhone) {
     $table = self::TABLE;
     $sql = "SELECT phone

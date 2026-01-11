@@ -66,3 +66,15 @@ function abort($status = 404) {
 
   die();
 }
+
+function logout() {
+  // Logout by clearing session superglobal, destroy file and deleting cookie
+  $_SESSION = [];
+  session_destroy();
+
+  $params = session_get_cookie_params();
+  setcookie('PHPSESSID', '', time() - 3000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+
+  header('Location: /login');
+  exit();
+}

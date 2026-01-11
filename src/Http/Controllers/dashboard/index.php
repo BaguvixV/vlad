@@ -9,9 +9,9 @@ use Models\Users;
 $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
 
-// Check if user exists and is active
-if ($loggedInUserEmail === null) {
-  abort(Response::FORBIDDEN);
+// Check logged-in user for allowance to see page content
+if (! $loggedInUserEmail) {
+  abort(Response::UNAUTHORIZED);
 };
 
 

@@ -27,31 +27,42 @@
 ```bash
 > (1) Add SQL typo and duplicate entry error display
 > (2) Prevent $_SERVER['PHP_SELF'] exploits
-> (3) empty TODO placeholder
+> (3) Create abstraction for validations like Core\Validator and those basic validations set inside Http\Request\AuthFormValidation to prevend code redundancy
+> (4) fix registration controller a bit (remove DB logic from AuthFromValidation and RegisterForm)
+> (5) Implement content in 'Create habit' page
+> (6) Display authenticated user created habits on dashboard
+> (7) empty TODO placeholder
 ```
 
 
 
-## 📌 10/01/2026 - 11/01/2026
+## 📌 10/01/2026 - 11/01/2026 (Focus: 9h 20min)
 
-**Focus:** User login, Dashboard display and Validation architecture
+**Focus:** feat: User login and Validation architecture
 
 ```bash
-- 10/01 🛠️ Implement user login flow
+- 10/01 🛠️ 11/01 ✅ Implement user login flow
 - 10/01 ✅ Add logout feature for users who are logged-in
-- 10/01 🛠️ Extend Requests\FormValidation.php and Requests\Login with login-specifyc validation rules
-- 10/01 🛠️ Display authenticated user created habits on dashboard
+- 10/01 🛠️ 11/01 ✅ Extend Requests\AuthFormValidation.php and Requests\LoginFrom with login-specifyc validation rules
+- 11/01 ✅ Add 'Create habit' navigation link visible for users who are logged-in
 - 10/01 🚨 Caught myself on thinking about wrong placement for checking functions/methods inside RegisterForm and LoginForm
 ```
 
 ### 🛠️ Daily Breakdown
 ```md
+#### 11/01/26 (Focus: 4h 57min)
+
+- ✅ Implement user login flow
+- ✅ Extend Requests\AuthFormValidation.php and Requests\LoginFrom with login-specifyc validation rules
+- ✅ Add 'Create habit' navigation link visible for users who are logged-in
+```
+
+```md
 #### 10/01/26 (Focus: 4h 22min)
 
 - 🛠️ Implement user login flow
 - ✅ Add logout feature for users who are logged-in
-- 🛠️ Extend Requests\FormValidation.php and Requests\Login with login-specifyc validation rules
-- 🛠️ Display authenticated user created habits on dashboard
+- 🛠️ Extend Requests\AuthFormValidation.php and Requests\LoginFrom with login-specifyc validation rules
 - 🚨 Caught myself on thinking about wrong placement for checking functions/methods inside RegisterForm and LoginForm
 ```
 

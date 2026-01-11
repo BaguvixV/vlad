@@ -114,7 +114,7 @@ abstract class AuthFromValidation {
       return;
     }
 
-    if (strlen($email) >= 20) {
+    if (strlen($email) >= 60) {
       $this->errors['email'] = 'You are exceeding email input length!';
       return;
     }
@@ -193,8 +193,51 @@ abstract class AuthFromValidation {
     }
   }
 
-  public function checkEmailWithPassword(string $email, string $password) {
-    // check if user with this credentials already exists
+
+  public function validateLoginEmail(?string $email) {
+    if (is_null($email)) {
+      $this->errors['email'] = 'Email input field is empty!';
+      return;
+    }
+
+    // if (strlen($email) <= 4) {
+    //   $this->errors['email'] = 'Email input length is too small!';
+    //   return;
+    // }
+
+    if (strlen($email) >= 60) {
+      $this->errors['email'] = 'You are exceeding email input length!';
+      return;
+    }
+
+    if (! preg_match($this->emailRegex, $email)) {
+      $safeEmail = htmlspecialchars($email);
+      $this->errors['email'] = "Incorrect email: \"<strong>$safeEmail</strong>\" --> format! Enter valid format, e.g., user@example.com.";
+      return;
+    }
+  }
+
+  public function validateLoginPassword(?string $password) {
+    if (is_null($password)) {
+      $this->errors['password'] = 'Password input field is empty!';
+      return;
+    }
+
+    // if (strlen($password) <= 6) {
+    //   $this->errors['password'] = 'Password input length is too small!';
+    //   return;
+    // }
+
+    if (strlen($password) >= 90) {
+      $this->errors['password'] = 'You are exceeding password input length!';
+      return;
+    }
+
+    if (! preg_match($this->passwordRegex, $password)) {
+      $safePassword = htmlspecialchars($password);
+      $this->errors['password'] = "Incorrect password: \"<strong>$safePassword</strong>\" --> format! Use at least 6 chars, 1 uppercase, 1 lowercase, 1 digit, 1 symbol.";
+      return;
+    }
   }
 
 }

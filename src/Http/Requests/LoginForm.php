@@ -1,18 +1,20 @@
 <?php
 
-// namespace Http\Requests;
+namespace Http\Requests;
 
-// use Http\Requests\FromValidation;
+use Http\Requests\AuthFromValidation;
 
 
-// final class LoginForm extends FromValidation {
-//   public function login($email, $password): bool {
-//     $this->validateEmail(email: $email);
-//     $this->validatePassword(password: $password);
-    
-//     $this->checkEmailWithPassword(email: $email, password: $password);
+final class LoginForm extends AuthFromValidation {
 
-//     return true;
-//   }
+  public function login(
+                      ?string $email,
+                      ?string $password): bool {
 
-// }
+    $this->validateLoginEmail(email: $email);
+    $this->validateLoginPassword(password: $password);
+
+    return empty($this->errors);
+  }
+
+}
