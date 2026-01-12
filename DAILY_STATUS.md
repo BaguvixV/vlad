@@ -28,10 +28,29 @@
 > (1) Add SQL typo and duplicate entry error display
 > (2) Prevent $_SERVER['PHP_SELF'] exploits
 > (3) Create abstraction for validations like Core\Validator and those basic validations set inside Http\Request\AuthFormValidation to prevend code redundancy
-> (4) fix registration controller a bit (remove DB logic from AuthFromValidation and RegisterForm)
-> (5) Implement content in 'Create habit' page
-> (6) Display authenticated user created habits on dashboard
-> (7) empty TODO placeholder
+> (4) Implement content in 'Create habit' page
+> (5) Add SQL table relations
+> (5) Create sub-category table for habit and link SQL relation
+> (5) empty TODO placeholder
+```
+
+
+
+## 🛠️ 12/01/2026 (Focus: Xh Ymin)
+
+### (Focus: Xh Ymin)
+```md
+12/01 📌 feat: Add habit create, update and delete functionality & Display user authenticated habits on dashboard
+```
+
+### (Focus: Xh Ymin)
+```md
+12/01 📌 feat: Implement soft-delete for users using is_active flag
+```
+
+### (Focus: 51min)
+```md
+12/01 ✅ refactor(auth): Move registration DB logic back to controller and clean up validation responsibilities
 ```
 
 
@@ -40,7 +59,8 @@
 
 **Focus:** feat: User login and Validation architecture
 
-```bash
+### 🛠️ Overall Progress:
+```md
 - 10/01 🛠️ 11/01 ✅ Implement user login flow
 - 10/01 ✅ Add logout feature for users who are logged-in
 - 10/01 🛠️ 11/01 ✅ Extend Requests\AuthFormValidation.php and Requests\LoginFrom with login-specifyc validation rules

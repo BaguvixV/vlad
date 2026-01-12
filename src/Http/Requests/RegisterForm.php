@@ -12,11 +12,9 @@ final class RegisterForm extends AuthFromValidation {
                         ?string $surname,
                         ?int $age,
                         ?string $email,
-                        ?string $dbEmail,
                         ?string $password,
                         ?string $rePassword,
-                        ?string $phone,
-                        ?string $dbPhone): bool {
+                        ?string $phone): bool {
 
     $this->validateName(name: $name);
     $this->validateSurname(surname: $surname);
@@ -25,9 +23,6 @@ final class RegisterForm extends AuthFromValidation {
     $this->validatePassword(password: $password);
     $this->validateRePassword(password: $password, rePassword: $rePassword);
     $this->validatePhone(phone: $phone);
-
-    $this->checkIfEmailExists(email: $dbEmail);
-    $this->checkIfPhoneExists(phone: $dbPhone);
 
     return empty($this->errors);
   }

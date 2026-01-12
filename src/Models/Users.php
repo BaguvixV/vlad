@@ -60,6 +60,7 @@ class Users {
     set => $this->isActiveBacking = (bool) $value;
   }
 
+
   public function read(): array {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}";
@@ -68,6 +69,40 @@ class Users {
     $stmt->execute();
 
     return $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
+  }
+
+
+  public function findUserByEmail(?string $localEmail): ?array {
+    $table = self::TABLE;
+    $sql = "SELECT *
+            FROM {$table}
+            WHERE email = :email
+    ";
+
+    $stmt = $this->connection->prepare(query: $sql);
+    $stmt->bindParam(':email', $localEmail);
+    $stmt->execute();
+
+    $output = $stmt->fetch(mode: PDO::FETCH_ASSOC);
+
+    return $output ? $output : null;
+  }
+
+
+  public function findUserByPhone(?string $localPhone): ?array {
+    $table = self::TABLE;
+    $sql = "SELECT *
+            FROM {$table}
+            WHERE phone = :phone
+    ";
+
+    $stmt = $this->connection->prepare(query: $sql);
+    $stmt->bindParam(':phone', $localPhone);
+    $stmt->execute();
+
+    $output = $stmt->fetch(mode: PDO::FETCH_ASSOC);
+
+    return $output ? $output : null;
   }
 
 
@@ -92,73 +127,4 @@ class Users {
     ]);
   }
 
-
-  public function login() {
-    //
-  }
-
-
-  public function findUserByEmail(?string $localEmail): ?array {
-    $table = self::TABLE;
-    $sql = "SELECT *
-            FROM {$table}
-            WHERE email = :email
-    ";
-
-    $stmt = $this->connection->prepare(query: $sql);
-    $stmt->bindParam(':email', $localEmail);
-    $stmt->execute();
-
-    $output = $stmt->fetch(mode: PDO::FETCH_ASSOC);
-
-    return $output ? $output : null;
-  }
-
-
-  // TODO: Remove this method (also with linked ones in register controller store) because of his redundancy
-  public function findUserByPhone(?string $localPhone): array {
-    $table = self::TABLE;
-    $sql = "SELECT *
-            FROM {$table}
-            WHERE phone = :phone
-    ";
-
-    $stmt = $this->connection->prepare(query: $sql);
-    $stmt->bindParam(':phone', $localPhone);
-    $stmt->execute();
-
-    return $stmt->fetch(mode: PDO::FETCH_ASSOC);
-  }
-
-
-  // TODO: Remove this method (also with linked ones in register controller store) because of his redundancy
-  public function findUsersEmail(?string $localEmail) {
-    $table = self::TABLE;
-    $sql = "SELECT email
-            FROM {$table}
-            WHERE email = :email
-    ";
-
-    $stmt = $this->connection->prepare(query: $sql);
-    $stmt->bindParam(':email', $localEmail);
-    $stmt->execute();
-
-    return $stmt->fetch(mode: PDO::FETCH_ASSOC);
-  }
-
-
-  // TODO: Remove this method (also with linked ones in register controller store) because of his redundancy
-  public function findUsersPhone(?string $localPhone) {
-    $table = self::TABLE;
-    $sql = "SELECT phone
-            FROM {$table}
-            WHERE phone = :phone
-    ";
-
-    $stmt = $this->connection->prepare(query: $sql);
-    $stmt->bindParam(':phone', $localPhone);
-    $stmt->execute();
-
-    return $stmt->fetch(mode: PDO::FETCH_ASSOC);
-  }
 }

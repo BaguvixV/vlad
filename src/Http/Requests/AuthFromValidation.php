@@ -179,20 +179,6 @@ abstract class AuthFromValidation {
     }
   }
 
-  public function checkIfEmailExists(?string $email) {
-    if($email) {
-      $this->errors['email'] = 'Someone is already using this e-mail address!';
-      return;
-    }
-  }
-
-  public function checkIfPhoneExists(?string $phone) {
-    if($phone) {
-      $this->errors['phone'] = 'Someone is already using this phone number!';
-      return;
-    }
-  }
-
 
   public function validateLoginEmail(?string $email) {
     if (is_null($email)) {

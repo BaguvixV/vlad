@@ -19,7 +19,7 @@ $pdo = $db->connect();
 
 $userModel = new Users(connection: $pdo);
 
-$validate = new RegisterForm(user: $userModel);
+$formValidatinModel = new RegisterForm(user: $userModel);
 
 
 // Sanitize variables before validating
@@ -31,31 +31,19 @@ $password = Sanitize::password($_POST['password']);
 $repeatedPassword = Sanitize::password($_POST['rePassword']);
 $phone = Sanitize::string(input: $_POST['phone']);
 
-// use sanitized email data to find existing DB email and return as an array
-$dbEmailArray = $userModel->findUsersEmail(localEmail: $email);
 
-// get string output from $dbEmailArray array output. If specified DB email not found return null.
-$dbEmail = $dbEmailArray['email'] ?? null;
-
-// use sanitized phone data to find existing DB phone and return as an array
-$dbPhoneArray = $userModel->findUsersPhone(localPhone: $phone);
-
-// get string output from $dbPhoneArray array output. If specified DB phone not found return null
-$dbPhone = $dbPhoneArray['phone'] ?? null;
-
-
-// Authentication from-specific validation
-$isValid = $validate->register($name, $surname, $age, $email, $dbEmail, $password, $repeatedPassword, $phone, $dbPhone);
+// Register from-specific validation
+$isValid = $formValidatinModel->register($name, $surname, $age, $email, $password, $repeatedPassword, $phone);
 
 
 if (! $isValid) {
-  $errors = $validate->errors();
+  $errors = $formValidatinModel->errors();
   $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
   // Pass error and old form into the template
   renderTemplate(
     'auth/register/index.view.php',[
-      'heading' => "Register Page (`store.php` in progress)",
+      'heading' => "Register Page",
       'error' => $errors,
       'loggedInUserEmail' => $loggedInUserEmail,
       'old' => $_POST
@@ -71,6 +59,47 @@ $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 // Convert age sanitizez number format inside string as an strict integer
 $age_int = (int)$age;
+
+
+$existingUserByProvidedEmil = $userModel->findUserByEmail(localEmail: $email);
+
+$existingUserByProvidedPhone = $userModel->findUserByPhone(localPhone: $phone);
+
+
+if ($existingUserByProvidedEmil) {
+  $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
+
+  // Pass error and old form into the template
+  renderTemplate(
+    'auth/register/index.view.php',[
+      'old' => $_POST,
+      'heading' => "Register Page",
+      'loggedInUserEmail' => $loggedInUserEmail,
+      'generalError' => 'Someone is already using this e-mail address'
+    ]
+  );
+
+  // Stop further proccess
+  return;
+}
+
+if ($existingUserByProvidedPhone) {
+  $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
+
+  // Pass error and old form into the template
+  renderTemplate(
+    'auth/register/index.view.php',[
+      'old' => $_POST,
+      'heading' => "Register Page",
+      'loggedInUserEmail' => $loggedInUserEmail,
+      'generalError' => 'Someone is already using this phone number'
+    ]
+  );
+
+  // Stop further proccess
+  return;
+}
+
 
 // Set data inside User Model
 $userModel->name = $name;
@@ -96,6 +125,6 @@ if ($userModel->register()) {
   header('Location: /dashboard');
   exit();
 
-} else {
-  dd('Something went wrong on user registration!');
 }
+
+dd('Something went wrong on user registration!');

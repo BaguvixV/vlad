@@ -1,12 +1,11 @@
-<h3>Register Form</h3>
+<h2>Register Form</h2>
 
 <form action="/registreties" method="post">
   <div>
 
-    <?php // if($old) : ?>
-    <?php // dd(htmlspecialchars($old['name'])); ?>
-    <?php // dd($_SESSION); ?>
-    <?php // endif; ?>
+    <?php if(isset($generalError)) : ?>
+      <h3 style="color:red;font-style: italic;"><?= htmlspecialchars($generalError); ?></h3>
+    <?php endif; ?>
 
     <?php if (isset($error['name'])) : ?>
       <strong style="color:red;"><?= $error['name']; ?></strong>
