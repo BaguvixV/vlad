@@ -14,10 +14,10 @@ $habitModel = new Habit(connection: $pdo);
 $habits = $habitModel->read();
 
 
-renderTemplate(
-  path: 'habit/index.view.php',
+renderView(
+  path: 'habit/create.view.php',
   data: [
-   'heading' => 'Habit Stats',
+   'heading' => 'Create Your Own Habit',
    'loggedInUserEmail' => $loggedInUserEmail,
    'habits' => $habits
   ]

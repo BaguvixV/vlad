@@ -23,7 +23,7 @@ $usersModel = new Users(connection: $pdo);
 $user = $usersModel->findUserByEmail($loggedInUserEmail);
 
 
-renderTemplate(
+renderView(
   path: 'dashboard/index.view.php',
   data: [
     'loggedInUserEmail' => $loggedInUserEmail,

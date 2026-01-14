@@ -36,26 +36,30 @@
 
 
 
-## 🛠️ 12/01/2026 (Focus: Xh Ymin)
+## 🛠️ 12/01/2026 - X/Y/2026 (Focus: Xh Ymin)
 
 ### (Focus: Xh Ymin)
 ```md
-12/01 📌 feat: Add habit create, update and delete functionality & Display user authenticated habits on dashboard
+📌 feat: Add habit CRUD functionality and Display user authenticated habits on dashboard
 ```
 
-### (Focus: Xh Ymin)
+### 14/01/2026 (Focus: 1h 10min)
 ```md
-12/01 📌 feat: Implement soft-delete for users using is_active flag
+refactor(views): Simplify folder and fike structure & restore Views naming
+
+- Inline main template content into page views
+- Renamed templates back to Views
+- Created empty habit CRUD view and controller files
 ```
 
-### (Focus: 51min)
+### 12/01/2026 (Focus: 52min)
 ```md
 12/01 ✅ refactor(auth): Move registration DB logic back to controller and clean up validation responsibilities
 ```
 
 
 
-## 📌 10/01/2026 - 11/01/2026 (Focus: 9h 20min)
+## ✅ 10/01/2026 - 11/01/2026 (Focus: 9h 20min)
 
 **Focus:** feat: User login and Validation architecture
 

@@ -20,9 +20,6 @@
     </li>
     <?php endif; ?>
     <li>
-      <a href="/habits">Habit Stats</a>
-    </li>
-    <li>
       <a href="/about">About</a>
     </li>
     <?php if ($loggedInUserEmail) : ?>

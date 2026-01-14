@@ -21,8 +21,8 @@ function controller($path): string {
   return base_path(path: "src/Http/Controllers/{$path}");
 }
 
-function template(string $path): string {
-  return base_path(path: "src/templates/{$path}");
+function view(string $path): string {
+  return base_path(path: "src/Views/{$path}");
 }
 
 /**
@@ -34,7 +34,7 @@ function template(string $path): string {
  *
  * @throws Exception if the $path is empty
  */
-function renderTemplate(string $path, array $data = []): void {
+function renderView(string $path, array $data = []): void {
   // Ensure a valid view path is provided
   if (empty($path)) {
     throw new Exception(message: "View path must not be empty.");
@@ -46,7 +46,7 @@ function renderTemplate(string $path, array $data = []): void {
 
   // Include the resolved view file
   // view() is assumed to return the full file path for the view
-  require template(path:  "pages/{$path}");
+  require view(path:  "pages/{$path}");
 }
 
 // Function to handle routing, the uri to one of these routes
@@ -62,7 +62,7 @@ function routeToController($uri, $routes) {
 function abort($status = 404) {
   http_response_code(response_code: $status);
 
-  require template(path: "error/{$status}.view.php");
+  require view(path: "error/{$status}.view.php");
 
   die();
 }

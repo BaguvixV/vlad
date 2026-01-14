@@ -14,7 +14,7 @@ $userModel = new Users(connection: $pdo);
 $users = $userModel->read();
 
 
-renderTemplate(
+renderView(
   path: 'admin/index.view.php',
   data: [
     'heading' => 'Admin page',

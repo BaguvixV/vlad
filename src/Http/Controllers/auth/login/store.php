@@ -35,7 +35,7 @@ if (! $isValid) {
   $error = $loginFormModel->errors();
   $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
-  renderTemplate(
+  renderView(
     path: 'auth/login/index.view.php',
     data: [
       'old' => $_POST,
@@ -80,7 +80,7 @@ session_destroy();
 
 $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
-renderTemplate(
+renderView(
   path: 'auth/login/index.view.php',
   data: [
     'old' => $_POST,

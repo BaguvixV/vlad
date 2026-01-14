@@ -3,7 +3,7 @@
 $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
 
-renderTemplate(
+renderView(
   path: 'auth/login/index.view.php',
   data: [
    'heading' => 'Login Page',

@@ -41,7 +41,7 @@ if (! $isValid) {
   $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
   // Pass error and old form into the template
-  renderTemplate(
+  renderView(
     'auth/register/index.view.php',[
       'heading' => "Register Page",
       'error' => $errors,
@@ -70,7 +70,7 @@ if ($existingUserByProvidedEmil) {
   $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
   // Pass error and old form into the template
-  renderTemplate(
+  renderView(
     'auth/register/index.view.php',[
       'old' => $_POST,
       'heading' => "Register Page",
@@ -87,7 +87,7 @@ if ($existingUserByProvidedPhone) {
   $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
   // Pass error and old form into the template
-  renderTemplate(
+  renderView(
     'auth/register/index.view.php',[
       'old' => $_POST,
       'heading' => "Register Page",
