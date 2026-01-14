@@ -35,12 +35,19 @@
 ```
 
 
-
-## 🛠️ 12/01/2026 - X/Y/2026 (Focus: Xh Ymin)
-
 ### (Focus: Xh Ymin)
 ```md
-📌 feat: Add habit CRUD functionality and Display user authenticated habits on dashboard
+📌 feat: Add habit CRUD functionality and Display authenticated user habits on dashboard
+```
+
+### 15/01/2026 (Focus: Xh Ymin)
+```md
+🛠️ feat: Router enchancment
+```
+
+### 14/01/2026 (Focus: 2h 4min)
+```md
+🛠️ feat: Router enchancment
 ```
 
 ### 14/01/2026 (Focus: 1h 10min)
