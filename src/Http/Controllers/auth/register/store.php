@@ -43,10 +43,11 @@ if (! $isValid) {
   // Pass error and old form into the template
   renderView(
     'auth/register/index.view.php',[
-      'heading' => "Register Page",
+      'old' => $_POST,
       'error' => $errors,
       'loggedInUserEmail' => $loggedInUserEmail,
-      'old' => $_POST
+      'heading' => "Register Page",
+      'generalError' => 'Validation Error!'
     ]
   );
 
@@ -90,8 +91,8 @@ if ($existingUserByProvidedPhone) {
   renderView(
     'auth/register/index.view.php',[
       'old' => $_POST,
-      'heading' => "Register Page",
       'loggedInUserEmail' => $loggedInUserEmail,
+      'heading' => "Register Page",
       'generalError' => 'Someone is already using this phone number'
     ]
   );

@@ -22,12 +22,12 @@ $pdo = $db->connect();
 $habitModel = new Habit($pdo);
 
 
-$destroySpecificHabit = $habitModel->forceDelete(habitId: $getHabitId);
+$destroySpecificHabit = $habitModel->softDelete(habitId: $getHabitId);
 
 
 if($destroySpecificHabit) {
   header('Location: /dashboard');
   exit();
 } else {
-  dd('Unable to force-delete habit.');
+  dd('Unable to soft-delete habit.');
 }

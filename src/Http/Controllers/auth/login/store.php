@@ -42,8 +42,7 @@ if (! $isValid) {
       'error' => $error,
       'loggedInUserEmail' => $loggedInUserEmail,
       'heading' => 'Login Page',
-      'errorHeading' => 'Validation Error',
-      'generalError' => $error['auth']
+      'generalError' => 'Validation Error!'
     ]
   );
 
@@ -86,7 +85,6 @@ renderView(
     'old' => $_POST,
     'loggedInUserEmail' => $loggedInUserEmail,
     'heading' => 'Login Page',
-    'errorHeading' => 'Authentication Error',
     'generalError' => 'No matching account found for that email address and password'
   ]
 );

@@ -15,7 +15,7 @@ $habits = $habitModel->read();
 
 
 renderView(
-  path: 'habit/create.view.php',
+  path: 'habit/index.view.php',
   data: [
    'heading' => 'Create Your Own Habit',
    'loggedInUserEmail' => $loggedInUserEmail,

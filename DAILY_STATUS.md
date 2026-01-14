@@ -40,14 +40,19 @@
 📌 feat: Add habit CRUD functionality and Display authenticated user habits on dashboard
 ```
 
+### (Focus: Xh Ymin)
+```md
+📌 feat: Implement create[post] and edit[put] habit CRUD functionality
+```
+
 ### 15/01/2026 (Focus: Xh Ymin)
 ```md
-🛠️ feat: Router enchancment
+🛠️ feat: Enhance router and extend habit CRUD with soft/force delete, restore and show
 ```
 
 ### 14/01/2026 (Focus: 2h 4min)
 ```md
-🛠️ feat: Router enchancment
+14/01 🛠️ feat: Router enchancement
 ```
 
 ### 14/01/2026 (Focus: 1h 10min)

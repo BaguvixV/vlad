@@ -10,7 +10,7 @@
 
   <?php require view(path: 'components/navigation.view.php'); ?>
 
-  <!-- Form section -->
+  <?php require view(path: 'partials/forms/habit-create.view.php'); ?>
 
   <?php require view(path: 'components/footer.view.php'); ?>
 

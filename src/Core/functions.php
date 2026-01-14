@@ -49,15 +49,6 @@ function renderView(string $path, array $data = []): void {
   require view(path:  "pages/{$path}");
 }
 
-// Function to handle routing, the uri to one of these routes
-function routeToController($uri, $routes) {
-  if (array_key_exists(key: $uri, array: $routes)) {
-    require $routes[$uri];
-  } else {
-    abort();
-  }
-}
-
 // Option to abort wit the give status code
 function abort($status = 404) {
   http_response_code(response_code: $status);

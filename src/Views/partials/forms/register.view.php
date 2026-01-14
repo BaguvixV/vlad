@@ -1,6 +1,6 @@
 <h2>Register Form</h2>
 
-<form action="/registreties" method="post">
+<form action="/register" method="post">
   <div>
 
     <?php if(isset($generalError)) : ?>

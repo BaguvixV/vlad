@@ -16,7 +16,7 @@
       <a href="/dashboard" style="color:green"><strong>Profile</strong></a>
     </li>
     <li>
-      <a href="/create-habit" style="color:green"><strong>Create habit</strong></a>
+      <a href="/habit" style="color:green"><strong>Create habit</strong></a>
     </li>
     <?php endif; ?>
     <li>
@@ -24,7 +24,7 @@
     </li>
     <?php if ($loggedInUserEmail) : ?>
     <li>
-      <a href="/izlogoties" style="color:crimson"><strong>Logout</strong></a>
+      <a href="/logout" style="color:crimson"><strong>Logout</strong></a>
     </li>
     <?php endif; ?>
     <br>
