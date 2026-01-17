@@ -45,14 +45,19 @@
 📌 feat: Implement create[post] and edit[put] habit CRUD functionality
 ```
 
-### 15/01/2026 (Focus: Xh Ymin)
+### 17/01/26 (Focus: 1h 15min)
 ```md
-🛠️ feat: Enhance router and extend habit CRUD with soft/force delete, restore and show
+wip/feat: Add habit creation with validation and improve Habit model type safety
 ```
 
-### 14/01/2026 (Focus: 2h 4min)
+### 🛠️ 15/01/2026 (Focus: Xh Ymin)
 ```md
-14/01 🛠️ feat: Router enchancement
+wip/feat: Enhance router and extend habit CRUD with soft/force delete, restore and show
+```
+
+### 🛠️ 14/01/2026 (Focus: 2h 4min)
+```md
+wip/feat: Router enchancement
 ```
 
 ### 14/01/2026 (Focus: 1h 10min)
