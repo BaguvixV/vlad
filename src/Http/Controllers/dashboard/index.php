@@ -24,7 +24,7 @@ $habitModel = new Habit(connection: $pdo);
 
 $user = $usersModel->findUserByEmail(localEmail: $loggedInUserEmail);
 // TODO: $habits = $habitModel->readByUserID(userID: $user['id']);
-$habits = $habitModel->read();
+$habits = $habitModel->readActive();
 
 
 renderView(

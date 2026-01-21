@@ -20,7 +20,7 @@ $pdo = $db->connect();
 $habitModel = new Habit(connection: $pdo);
 
 
-$destroySpecificHabit = $habitModel->softDelete(habitId: $getHabitId);
+$destroySpecificHabit = $habitModel->restore(habitId: $getHabitId);
 
 
 if($destroySpecificHabit) {
@@ -29,4 +29,4 @@ if($destroySpecificHabit) {
 }
 
 
-dd('Unable to soft-delete habit.');
+dd('Unable to restore habit.');

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `habit` (
   `id`          INT AUTO_INCREMENT PRIMARY KEY,
   `created_at`  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `category`    VARCHAR(80) NOT NULL,
-  `status`      ENUM('pending','completed','deleted','') NOT NULL,
+  `completion`  TINYINT(1) NOT NULL DEFAULT 0,
   `title`       VARCHAR(80) NOT NULL,
   `description` TEXT,
   `is_active`   TINYINT(1) NOT NULL DEFAULT 1
@@ -40,11 +40,11 @@ CREATE TABLE IF NOT EXISTS `habit` (
 -- Values for table `habit`
 --
 
-INSERT INTO `habit` (`category`, `status`, `title`, `description`, `is_active`) VALUES
-('health', 'pending', 'Morning Jog', 'Jog for 30 minutes every morning to improve cardiovascular health.', 1),
-('productivity', 'completed', 'Read a Book', 'Finish reading "Atomic Habits" by James Clear to enhance personal development.', 1),
-('hobby', 'deleted', 'Learn Guitar', 'Practice guitar for at least 20 minutes daily to improve skills.', 0),
-('work', '', 'Project Meeting', 'Attend the weekly project meeting to discuss progress and next steps.', 1);
+INSERT INTO `habit` (`category`, `completion`, `title`, `description`, `is_active`) VALUES
+('health', 1, 'Morning Jog', 'Jog for 30 minutes every morning to improve cardiovascular health.', 1),
+('productivity', 0, 'Read a Book', 'Finish reading "Atomic Habits" by James Clear to enhance personal development.', 1),
+('hobby', 0, 'Learn Guitar', 'Practice guitar for at least 20 minutes daily to improve skills.', 0),
+('work', 1, 'Project Meeting', 'Attend the weekly project meeting to discuss progress and next steps.', 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

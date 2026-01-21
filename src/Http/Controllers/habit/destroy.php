@@ -6,28 +6,27 @@ use Core\Database;
 use Models\Habit;
 
 
-$loggedInUserEmail = $_SESSION['user']['email'] ?? null;
+// method Check (POST only with DELETE method spoof)
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_POST['__spoof_method'] !== 'DELETE') {
+  abort(status: Response::METHOD_NOT_ALLOWED);
+}
 
-// check if user is logged in
-if (! $loggedInUserEmail) {
-  abort(Response::UNAUTHORIZED);
-};
 
 $getHabitId= $_GET['id'] ?? null;
-
 
 $db = new Database(config: Config::Database());
 $pdo = $db->connect();
 
-$habitModel = new Habit($pdo);
+$habitModel = new Habit(connection: $pdo);
 
 
 $destroySpecificHabit = $habitModel->forceDelete(habitId: $getHabitId);
 
 
 if($destroySpecificHabit) {
-  header('Location: /dashboard');
+  header('Location: /archived');
   exit();
-} else {
-  dd('Unable to force-delete habit.');
 }
+
+
+dd('Unable to force-delete habit.');

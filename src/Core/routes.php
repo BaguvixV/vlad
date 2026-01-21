@@ -19,4 +19,7 @@ $router->post(uri: '/habit', controller: 'habit/store.php');
 $router->get(uri: '/habit/{id}', controller: 'habit/show.php');
 $router->patch(uri: '/habit/{id}', controller: 'habit/patch.php');
 $router->put(uri: '/habit/{id}', controller: 'habit/put.php');
-$router->delete(uri: '/habit/{id}', controller: 'habit/destroy.php');
+
+$router->get(uri: '/archived', controller: 'habit/archived.php');
+$router->delete(uri: '/archived/{id}', controller: 'habit/destroy.php');
+$router->patch(uri: '/archived/{id}', controller: 'habit/restore.php');

@@ -13,10 +13,13 @@
     </li>
     <?php else : ?>
     <li>
-      <a href="/dashboard" style="color:green"><strong>Profile</strong></a>
+      <a href="/dashboard" style="color:chocolate"><strong>Profile</strong></a>
     </li>
     <li>
-      <a href="/habit" style="color:green"><strong>Create habit</strong></a>
+      <a href="/habit" style="color:teal"><strong>Create habit</strong></a>
+    </li>
+    <li>
+      <a href="/archived" style="color:olive"><strong>Archived habits</strong></a>
     </li>
     <?php endif; ?>
     <li>

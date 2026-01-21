@@ -33,36 +33,32 @@
   <?php // require template(path: 'partials/lists/habit-list.view.php'); ?>
   <h2>All Created Habit Stats</h2>
 
-  <?php foreach($habits as $habit): ?>
-    <p>Date: <?= $habit['created_at']; ?></p>
-    <p>Category: <?= $habit['category']; ?></p>
-    <p>Status: <?= $habit['status']; ?></p>
-    <p>Title: <?= $habit['title']; ?></p>
-    <p>Description: <?= $habit['description']; ?></p>
-    <p>Is Active: <?= $habit['is_active']; ?></p>
+  <? if (! isset($habits)) : ?>
+    <h3 style="color:crimson">There are no created habits</h3>
+  <? else : ?>
+    <?php foreach($habits as $habit): ?>
+      <p>Date: <?= $habit['created_at']; ?></p>
+      <p>Category: <?= $habit['category']; ?></p>
+      <p>Completion: <?= $habit['completion']; ?></p>
+      <p>Title: <?= $habit['title']; ?></p>
+      <p>Description: <?= $habit['description']; ?></p>
+      <p>Is Active: <?= $habit['is_active']; ?></p>
 
 
-    <?php // require view(path: 'partials/forms/habit-show.view.php'); ?>
-    <h2>Show this habit</h2>
-    <form action="/habit/<?= $habit['id']; ?>" method="GET" onsubmit="return confirm('Are you sure you want to see habit Nr.<?= $habit['id']; ?>?');">
-      <div>
-        <button type="submit">🔎Show</button>
-      </div>
-    </form>
+      <?php // require view(path: 'partials/forms/habit-show.view.php'); ?>
+      <h2>Show this habit</h2>
+      <form action="/habit/<?= $habit['id']; ?>" method="GET">
+        <div>
+          <button type="submit">🔎Show</button>
+        </div>
+      </form>
 
-    <?php // require view(path: 'partials/forms/habit-delete.view.php'); ?>
-    <form action="/habit/<?= $habit['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to force-delete habit Nr.<?= $habit['id']; ?>?');">
-      <input type="hidden" name ="__spoof_method" value="DELETE">
+      <hr>
 
-      <div>
-        <button type="submit">🗑️ Completly delete</button>
-      </div>
-    </form>
+    <?php endforeach; ?>
+  <? endif; ?>
 
-    <hr>
-
-  <?php endforeach; ?>
-
+  
   <?php require view(path: 'components/footer.view.php'); ?>
 
 </body>

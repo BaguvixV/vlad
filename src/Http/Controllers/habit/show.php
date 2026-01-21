@@ -11,8 +11,8 @@ $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 $db = new Database(config: Config::Database());
 $pdo = $db->connect();
 
-$habitModel = new Habit($pdo);
-$habit = $habitModel->readHabitById($_GET['id']);
+$habitModel = new Habit(connection: $pdo);
+$habit = $habitModel->readHabitById(habitId: $_GET['id']);
 $habit = $habit[0];
 
 

@@ -4,7 +4,6 @@ namespace Http\Requests;
 
 use Http\Requests\AuthFromValidation;
 
-
 final class LoginForm extends AuthFromValidation {
 
   public function login(

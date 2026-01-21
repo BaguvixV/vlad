@@ -40,9 +40,15 @@
 📌 feat: Add habit CRUD functionality and Display authenticated user habits on dashboard
 ```
 
-### (Focus: Xh Ymin)
+### 21/01/26 (Focus: 3h 16min)
 ```md
-📌 feat: Implement create[post] and edit[put] habit CRUD functionality
+feat: Complete habit CRUD with validation, soft-delete, restore, and archived view
+
+- Sanitized and validated habit creation and editing functionalities
+- Moved Views\partials code into Views\pages to make easier to read code for now
+- Created navigation link named archieved with archieved habits and ability to restore or force-delete habits
+- Changed Habit SQL column name status to completion
+- Created Core\Validator with regex varaibles and error method
 ```
 
 ### 17/01/26 (Focus: 1h 15min)

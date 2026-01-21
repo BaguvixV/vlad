@@ -48,8 +48,43 @@ class Habit {
     set => $this->isActiveBacking = (bool) $value;
   }
 
-  // Note: Later import database methods from Model.php
-  public function read(): ?array {
+  // create habit
+  public function create(): bool {
+    $table = self::TABLE;
+    $sql = "INSERT INTO {$table}
+            (category, title, description)
+            VALUES (:category, :title, :description)
+    ";
+
+    $stmt = $this->connection->prepare($sql);
+
+    return $stmt->execute([
+      ':category' => $this->categoryBacking,
+      ':title' => $this->titleBacking,
+      ':description' => $this->description
+    ]);
+  }
+
+  // edit selected habit
+  public function edit(int|null $habitId): bool {
+    $table = self::TABLE;
+    $sql = "UPDATE {$table}
+            SET category=:category, title=:title, description=:description
+            WHERE id = :id
+    ";
+
+    $stmt = $this->connection->prepare($sql);
+
+    return $stmt->execute([
+      ':id' => $habitId,
+      ':category' => $this->categoryBacking,
+      ':title' => $this->titleBacking,
+      ':description' => $this->description
+    ]);
+  }
+
+  // TODO: Later import database methods from Model.php
+  public function read(): array|null {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}";
 
@@ -61,8 +96,37 @@ class Habit {
     return $output ? $output : null;
   }
 
-  // public function readHabitByID($habitId): ?array {
-  public function readHabitById($habitId) {
+  // TODO: Later import database methods from Model.php
+  public function readActive(): array|null {
+    $table = self::TABLE;
+    $sql = "SELECT * FROM {$table}
+            WHERE is_active = 1
+    ";
+
+    $stmt = $this->connection->prepare(query: $sql);
+    $stmt->execute();
+
+    $output = $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
+
+    return $output ? $output : null;
+  }
+
+  // TODO: Later import database methods from Model.php
+  public function readArchived(): array|null {
+    $table = self::TABLE;
+    $sql = "SELECT * FROM {$table}
+            WHERE is_active = 0
+    ";
+
+    $stmt = $this->connection->prepare(query: $sql);
+    $stmt->execute();
+
+    $output = $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
+
+    return $output ? $output : null;
+  }
+
+  public function readHabitById(int|null $habitId): array|null {
     $table = self::TABLE;
     $sql = "SELECT *
             FROM {$table}
@@ -81,7 +145,7 @@ class Habit {
   }
 
   // delete habit
-  public function forceDelete(?int $habitId): bool {
+  public function forceDelete(int|null $habitId): bool|string {
     $table = self::TABLE;
     $sql = "DELETE 
             FROM {$table}
@@ -90,17 +154,16 @@ class Habit {
 
     $stmt = $this->connection->prepare(query: $sql);
     $stmt->bindParam(':id', $habitId, PDO::PARAM_INT);
-    $stmt->execute();
 
     try {
       return $stmt->execute();
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return "Error on deleting product: " . $e->getMessage() . ". -- ";
     }
   }
 
   // soft delete
-  public function softDelete(?int $habitId): bool {
+  public function softDelete(int|null $habitId): bool|string {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET is_active = false
@@ -109,17 +172,16 @@ class Habit {
 
     $stmt = $this->connection->prepare(query: $sql);
     $stmt->bindParam(':id', $habitId, PDO::PARAM_INT);
-    $stmt->execute();
 
     try {
       return $stmt->execute();
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return "Error on soft-deleting product: " . $e->getMessage() . ". -- ";
     }
   }
 
   // reset soft-deleted habit
-  public function restore(?int $habitId): bool {
+  public function restore(int|null $habitId): bool|string {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET is_active = true
@@ -128,11 +190,10 @@ class Habit {
 
     $stmt = $this->connection->prepare(query: $sql);
     $stmt->bindParam(':id', $habitId, PDO::PARAM_INT);
-    $stmt->execute();
 
     try {
       return $stmt->execute();
-    } catch (PDOException $e) {
+    } catch (\PDOException $e) {
       return "Error on deleting product: " . $e->getMessage() . ". -- ";
     }
   }
