@@ -16,7 +16,7 @@
     <?php // require view(path: 'partials/forms/habit-show.view.php'); ?>
     <?php foreach ($habits as $habit) : ?>
       <h3>Habit: <i>"<?=  htmlspecialchars($habit['title']); ?>"</i></h3>
-      <p><strong>ID:</strong> <?= htmlspecialchars($habit['id']); ?></p>
+      <p><strong>ID:</strong> <?= htmlspecialchars($habit['habit_id']); ?></p>
       <p><strong>Created At:</strong> <?= htmlspecialchars($habit['created_at']); ?></p>
       <p><strong>Completion:</strong> <?= htmlspecialchars($habit['completion']); ?></p>
       <p><strong>Title:</strong> <?= htmlspecialchars($habit['title']); ?></p>
@@ -24,7 +24,7 @@
       <p><strong>Is Active:</strong> <?= htmlspecialchars($habit['is_active']); ?></p>
       
   
-      <form action="/archived/<?= $habit['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to restore soft-deleted habit Nr.<?= $habit['id']; ?>?');">
+      <form action="/archived/<?= $habit['habit_id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to restore soft-deleted habit Nr.<?= $habit['habit_id']; ?>?');">
         <input type="hidden" name ="__spoof_method" value="PATCH">
   
         <div>
@@ -34,7 +34,7 @@
   
   
       <?php // require view(path: 'partials/forms/habit-delete.view.php'); ?>
-      <form action="/archived/<?= $habit['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to force-delete habit Nr.<?= $habit['id']; ?>?');">
+      <form action="/archived/<?= $habit['habit_id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to force-delete habit Nr.<?= $habit['habit_id']; ?>?');">
         <input type="hidden" name ="__spoof_method" value="DELETE">
   
         <div>

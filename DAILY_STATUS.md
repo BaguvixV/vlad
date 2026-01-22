@@ -22,23 +22,50 @@
 - 🚨 Important note
 
 
-## 📌 Unorganized TODO list:
-
-```bash
-> (1) Add SQL typo and duplicate entry error display
-> (2) Prevent $_SERVER['PHP_SELF'] exploits
-> (3) Create abstraction for validations like Core\Validator and those basic validations set inside Http\Request\AuthFormValidation to prevend code redundancy
-> (4) Implement content in 'Create habit' page
-> (5) Add SQL table relations
-> (5) Create sub-category table for habit and link SQL relation
-> (5) empty TODO placeholder
-```
 
 
-### (Focus: Xh Ymin)
-```md
-📌 feat: Add habit CRUD functionality and Display authenticated user habits on dashboard
-```
+### 📌 25/01/26 📌
+#### | TASK | feat: Display only habits with checkboxes on dashboard page
+##### WHY
+##### WHAT
+##### HOW
+##### ALTERNATIVES
+##### LEARNED
+##### FUTURE NOTES
+
+### 📌 23/01/26 📌
+#### | TASK | refactor: Remove unnecessary habits and users model setters and getters
+##### WHY
+##### WHAT
+##### HOW
+##### ALTERNATIVES
+##### LEARNED
+##### FUTURE NOTES
+
+
+### 22/01/26
+#### | TASK | feat: List logged-in user created habits on dashboard and archive pages
+##### WHY
+To get only user specifyc habits and not ones from other registered users
+##### WHAT
+- Added `user_id` foreign key to `habit` table
+- Create `findByUserID(int|null $userID)` and `findArchivedUserId(int|null $userID)` class method in Habit model
+- Renamed habit.id table and column to habits.habit_id
+- Renamed users.id column to users.user_id
+##### HOW
+- One-to-One Relationship
+- ON DELETE and UPDATE CASCADE
+
+##### ALTERNATIVES
+- One-to-one realtion change with one-to-many
+##### LEARNED
+- Relation meaning in relational database
+- That in it is redundand to type `docker compose build` each time I type `docker compose down` when adding some changes in docker-compose.yml file and that `docker compose up` is just enough for example to add latest migrations folder changes into database
+- Also if I am using not detached mode then ctrl+c key combination just stops running containers without removing containers and networks (optionally images and volumes as well) as if `docker compose down` do
+##### FUTURE NOTES
+- Probably will improve finding methods by making it static and also making it a bit more universal for preventing find type method redundancy
+
+
 
 ### 21/01/26 (Focus: 3h 16min)
 ```md
@@ -51,20 +78,24 @@ feat: Complete habit CRUD with validation, soft-delete, restore, and archived vi
 - Created Core\Validator with regex varaibles and error method
 ```
 
+
 ### 17/01/26 (Focus: 1h 15min)
 ```md
 wip/feat: Add habit creation with validation and improve Habit model type safety
 ```
+
 
 ### 🛠️ 15/01/2026 (Focus: Xh Ymin)
 ```md
 wip/feat: Enhance router and extend habit CRUD with soft/force delete, restore and show
 ```
 
+
 ### 🛠️ 14/01/2026 (Focus: 2h 4min)
 ```md
 wip/feat: Router enchancement
 ```
+
 
 ### 14/01/2026 (Focus: 1h 10min)
 ```md
@@ -74,6 +105,7 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 - Renamed templates back to Views
 - Created empty habit CRUD view and controller files
 ```
+
 
 ### 12/01/2026 (Focus: 52min)
 ```md

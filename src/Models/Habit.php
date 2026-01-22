@@ -6,7 +6,7 @@ use PDO;
 
 
 class Habit {
-  private const TABLE = 'habit';
+  private const TABLE = 'habits';
   private string $dateBacking;
   private string $categoryBacking;
   private string $statusBacking;
@@ -48,17 +48,18 @@ class Habit {
     set => $this->isActiveBacking = (bool) $value;
   }
 
-  // create habit
-  public function create(): bool {
+  // create habit for specific user
+  public function create($forSpecificUser): bool {
     $table = self::TABLE;
     $sql = "INSERT INTO {$table}
-            (category, title, description)
-            VALUES (:category, :title, :description)
+            (user_id, category, title, description)
+            VALUES (:user_id, :category, :title, :description)
     ";
 
     $stmt = $this->connection->prepare($sql);
 
     return $stmt->execute([
+      ':user_id' => $forSpecificUser,
       ':category' => $this->categoryBacking,
       ':title' => $this->titleBacking,
       ':description' => $this->description
@@ -70,13 +71,13 @@ class Habit {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET category=:category, title=:title, description=:description
-            WHERE id = :id
+            WHERE habit_id = :habit_id
     ";
 
     $stmt = $this->connection->prepare($sql);
 
     return $stmt->execute([
-      ':id' => $habitId,
+      ':habit_id' => $habitId,
       ':category' => $this->categoryBacking,
       ':title' => $this->titleBacking,
       ':description' => $this->description
@@ -96,14 +97,15 @@ class Habit {
     return $output ? $output : null;
   }
 
-  // TODO: Later import database methods from Model.php
-  public function readActive(): array|null {
+  public function findByUserId(int|null $userId): array|null {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}
             WHERE is_active = 1
+            AND user_id = :user_id
     ";
 
     $stmt = $this->connection->prepare(query: $sql);
+    $stmt->bindParam(':user_id', $userId);
     $stmt->execute();
 
     $output = $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
@@ -111,14 +113,15 @@ class Habit {
     return $output ? $output : null;
   }
 
-  // TODO: Later import database methods from Model.php
-  public function readArchived(): array|null {
+  public function findArchivedUserId(int|null $userId): array|null {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}
             WHERE is_active = 0
+            AND user_id = :user_id
     ";
 
     $stmt = $this->connection->prepare(query: $sql);
+    $stmt->bindParam(':user_id', $userId);
     $stmt->execute();
 
     $output = $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
@@ -126,17 +129,17 @@ class Habit {
     return $output ? $output : null;
   }
 
-  public function readHabitById(int|null $habitId): array|null {
+  public function readById(int|null $habitId): array|null {
     $table = self::TABLE;
     $sql = "SELECT *
             FROM {$table}
-            WHERE id = :id
+            WHERE habit_id = :habit_id
     ";
 
     $stmt = $this->connection->prepare(query: $sql);
 
     // $stmt->bindParam(':id', $habitId, PDO::PARAM_INT);
-    $stmt->bindParam(':id', $habitId);
+    $stmt->bindParam(':habit_id', $habitId);
     $stmt->execute();
 
     $output = $stmt->fetchAll(mode: PDO::FETCH_ASSOC);
@@ -149,11 +152,11 @@ class Habit {
     $table = self::TABLE;
     $sql = "DELETE 
             FROM {$table}
-            WHERE id = :id
+            WHERE habit_id = :habit_id
     ";
 
     $stmt = $this->connection->prepare(query: $sql);
-    $stmt->bindParam(':id', $habitId, PDO::PARAM_INT);
+    $stmt->bindParam(':habit_id', $habitId, PDO::PARAM_INT);
 
     try {
       return $stmt->execute();
@@ -167,11 +170,11 @@ class Habit {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET is_active = false
-            WHERE id = :id
+            WHERE habit_id = :habit_id
     ";
 
     $stmt = $this->connection->prepare(query: $sql);
-    $stmt->bindParam(':id', $habitId, PDO::PARAM_INT);
+    $stmt->bindParam(':habit_id', $habitId, PDO::PARAM_INT);
 
     try {
       return $stmt->execute();
@@ -185,11 +188,11 @@ class Habit {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET is_active = true
-            WHERE id = :id
+            WHERE habit_id = :habit_id
     ";
 
     $stmt = $this->connection->prepare(query: $sql);
-    $stmt->bindParam(':id', $habitId, PDO::PARAM_INT);
+    $stmt->bindParam(':habit_id', $habitId, PDO::PARAM_INT);
 
     try {
       return $stmt->execute();

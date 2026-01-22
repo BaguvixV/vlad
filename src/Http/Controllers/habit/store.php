@@ -49,13 +49,16 @@ if (! $isValid) {
 
 
 // set data inside habit model
+// TODO: somehow set user_id into habit. But does habit model needs to know user data?
 $habitModel->category = $category;
 $habitModel->title = $title;
 $habitModel->description = $description;
 
+// get user id from logged in user and set to variable to link that on creation
+$loggedInUserID = $_SESSION['user']['id'] ?? null;
 
-// crete habit
-if ($habitModel->create()) {
+// crete habit for spefific user
+if ($habitModel->create(forSpecificUser: $loggedInUserID)) {
   header('Location: /dashboard');
   exit;
 }

@@ -61,7 +61,7 @@ if ($user) {
   if ($legitPassword) {
     
     $_SESSION['user'] = [
-      'id' => $user['id'],
+      'id' => $user['user_id'],
       'name' => $user['name'],
       'email' => $user['email'],
       'is_active' => $user['is_active'],

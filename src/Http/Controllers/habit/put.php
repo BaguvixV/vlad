@@ -13,13 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_POST['__spoof_method'] !== 'PUT')
   abort(status: Response::METHOD_NOT_ALLOWED);
 }
 
+$getReqHabitId = $_GET['id'] ?? null;
 
 $db = new Database(config: Config::database());
 $pdo = $db->connect();
 
 $habitModel = new Habit(connection: $pdo);
-$habit = $habitModel->readHabitById(habitId: $_GET['id']);
+$habit = $habitModel->readById(habitId: $getReqHabitId);
 $habit = $habit[0];
+
 
 $formValidatinModel = new EditHabit(habit: $habitModel);
 
@@ -61,7 +63,7 @@ $habitModel->description = $description;
 
 
 // crete habit
-if ($habitModel->edit(habitId: $habit['id'])) {
+if ($habitModel->edit(habitId: $habit['habit_id'])) {
   header('Location: /dashboard');
   exit;
 }

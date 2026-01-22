@@ -8,7 +8,7 @@ use Models\Habit;
 
 
 $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
+$loggedInUserID = $_SESSION['user']['id'] ?? null;
 
 // Check logged-in user for allowance to see page content
 if (! $loggedInUserEmail) {
@@ -24,7 +24,7 @@ $habitModel = new Habit(connection: $pdo);
 
 $user = $usersModel->findUserByEmail(localEmail: $loggedInUserEmail);
 // TODO: $habits = $habitModel->readByUserID(userID: $user['id']);
-$habits = $habitModel->readActive();
+$habits = $habitModel->findByUserId(userId: $loggedInUserID);
 
 
 renderView(

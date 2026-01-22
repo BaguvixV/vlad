@@ -13,7 +13,7 @@
 
   <?php // require view(path: 'partials/forms/habit-show.view.php'); ?>
   <h3>Habit: <i>"<?=  htmlspecialchars($habit['title']); ?>"</i></h3>
-  <p><strong>ID:</strong> <?= htmlspecialchars($habit['id']); ?></p>
+  <p><strong>ID:</strong> <?= htmlspecialchars($habit['habit_id']); ?></p>
   <p><strong>Created At:</strong> <?= htmlspecialchars($habit['created_at']); ?></p>
   <p><strong>Completion:</strong> <?= htmlspecialchars($habit['completion']); ?></p>
   <p><strong>Title:</strong> <?= htmlspecialchars($habit['title']); ?></p>
@@ -21,7 +21,7 @@
   <p><strong>Is Active:</strong> <?= htmlspecialchars($habit['is_active']); ?></p>
 
   <?php // require view(path: 'partials/forms/habit-soft-delete.view.php'); ?>
-  <form action="/habit/<?= $habit['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to soft-delete habit Nr.<?= $habit['id']; ?>?');">
+  <form action="/habit/<?= $habit['habit_id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to soft-delete habit Nr.<?= $habit['habit_id']; ?>?');">
     <input type="hidden" name ="__spoof_method" value="PATCH">
 
     <div>
@@ -34,7 +34,7 @@
   <?php // require view(path: 'partials/forms/habit-edit.view.php'); ?>
   <h3>Edit Habit</h3>
 
-  <form action="/habit/<?= $habit['id']; ?>" method="POST">
+  <form action="/habit/<?= $habit['habit_id']; ?>" method="POST">
     <input type="hidden" name ="__spoof_method" value="PUT">
 
     <?php if (isset($generalError)) : ?>

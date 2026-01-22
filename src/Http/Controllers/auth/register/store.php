@@ -117,7 +117,7 @@ if ($userModel->register()) {
   $createdUserInfo = $userModel->findUserByEmail($userModel->email);
 
   $_SESSION['user'] = [
-    'id' => $createdUserInfo['id'],
+    'id' => $createdUserInfo['user_id'],
     'name' => $createdUserInfo['name'],
     'email' => $createdUserInfo['email'],
     'is_active' => $createdUserInfo['is_active'],

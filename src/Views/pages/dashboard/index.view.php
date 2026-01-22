@@ -33,9 +33,9 @@
   <?php // require template(path: 'partials/lists/habit-list.view.php'); ?>
   <h2>All Created Habit Stats</h2>
 
-  <? if (! isset($habits)) : ?>
+  <?php if (! isset($habits)) : ?>
     <h3 style="color:crimson">There are no created habits</h3>
-  <? else : ?>
+  <?php else : ?>
     <?php foreach($habits as $habit): ?>
       <p>Date: <?= $habit['created_at']; ?></p>
       <p>Category: <?= $habit['category']; ?></p>
@@ -46,8 +46,8 @@
 
 
       <?php // require view(path: 'partials/forms/habit-show.view.php'); ?>
-      <h2>Show this habit</h2>
-      <form action="/habit/<?= $habit['id']; ?>" method="GET">
+      <h3>Show this habit</h3>
+      <form action="/habit/<?= $habit['habit_id']; ?>" method="GET">
         <div>
           <button type="submit">🔎Show</button>
         </div>
@@ -56,7 +56,7 @@
       <hr>
 
     <?php endforeach; ?>
-  <? endif; ?>
+  <?php endif; ?>
 
   
   <?php require view(path: 'components/footer.view.php'); ?>

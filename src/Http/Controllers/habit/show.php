@@ -12,7 +12,7 @@ $db = new Database(config: Config::Database());
 $pdo = $db->connect();
 
 $habitModel = new Habit(connection: $pdo);
-$habit = $habitModel->readHabitById(habitId: $_GET['id']);
+$habit = $habitModel->readById(habitId: $_GET['id']);
 $habit = $habit[0];
 
 
@@ -21,6 +21,6 @@ renderView(
   data: [
     'loggedInUserEmail' => $loggedInUserEmail,
     'habit' => $habit,
-    'heading' => "Habit Nr.{$habit['id']}"
+    'heading' => "Habit Nr.{$habit['habit_id']}"
   ]
 );
