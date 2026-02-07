@@ -6,8 +6,9 @@ use Core\Validator;
 
 class HabitFormValidation extends Validator {
 
-  public function __construct(public object $habit) {
-    // intentionaly empty
+  public function __construct(public object $habit)
+  {
+    // intentionaly empty (PHP 8.0 feature that allows Constructor Property Promotion)
   }
 
   public function validateCategory(?string $category): void {

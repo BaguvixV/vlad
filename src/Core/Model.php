@@ -7,7 +7,8 @@ namespace Core;
 
 abstract class Model {
 
-  public function __construct() {
+  public function __construct()
+  {
     // placeholder for potential future functionality
   }
 }

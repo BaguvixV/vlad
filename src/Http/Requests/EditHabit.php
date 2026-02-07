@@ -4,7 +4,8 @@ namespace Http\Requests;
 
 use Http\Requests\HabitFormValidation;
 
-final class EditHabit extends HabitFormValidation {
+final class EditHabit extends HabitFormValidation
+{
 
   public function validateEditFrom(
                                   ?string $category,

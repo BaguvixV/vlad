@@ -12,18 +12,7 @@ const BASE_PATH = __DIR__ . '/../';
 
 require BASE_PATH . 'src/Core/functions.php';
 require core(path: 'autoloader.php');
-require core(path: 'Database.php');
-require core(path: 'Router.php');
 
+$app = new \Core\Application();
 
-$router = new \Core\Router();
-
-// Get route path from routes.php file
-$routes = require core(path: 'routes.php');
-
-// Parsing of the uri
-$uri = parse_url(url: $_SERVER['REQUEST_URI'])['path'];
-// Get the method
-$method = $_POST['__spoof_method'] ?? $_SERVER['REQUEST_METHOD'];
-
-$router->route(uri: $uri, method: $method);
+$app->run();

@@ -5,7 +5,8 @@ namespace Http\Requests;
 use Http\Requests\AuthFromValidation;
 
 
-final class RegisterForm extends AuthFromValidation {
+final class RegisterForm extends AuthFromValidation
+{
 
   public function register(
                         ?string $name,

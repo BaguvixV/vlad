@@ -24,7 +24,7 @@
 
 
 
-### 📌 25/01/26 📌
+### 📌 09/02/26 📌
 #### | TASK | feat: Display only habits with checkboxes on dashboard page
 ##### WHY
 ##### WHAT
@@ -33,14 +33,49 @@
 ##### LEARNED
 ##### FUTURE NOTES
 
-### 📌 23/01/26 📌
-#### | TASK | refactor: Remove unnecessary habits and users model setters and getters
+### 📌 08/02/26 📌
+#### | TASK | feat: Parse URL to extract parameters to handle routing (e.g. /post/123)
 ##### WHY
 ##### WHAT
 ##### HOW
 ##### ALTERNATIVES
 ##### LEARNED
 ##### FUTURE NOTES
+
+
+### untracked because of other priorities was set at this time gap [job leaving process]
+#### | TASK | refactor: Re-evaluate controller structure toward OOP MVC approach
+##### WHY
+- To make OOP MVC-style code instead of procedural code
+- Make CRUD inside one controller instead of separate on each method their own php file
+##### WHAT
+- Create Application, Request core files inside src\Core directory.
+- Switched from one folder many actions (also all with precedural programming style) to one controller with many actions the OOP-style
+##### LEARNED
+- Dived deeper into running application from Application file
+##### FUTURE NOTES
+- Parse URL to extract parameters
+##### ADDITIONAL/EXTRA
+- Renamed Habit model file name as Habits un User as Users
+
+
+### 23&25/01/26 CHANGED MY MIND IN MID TASK COMPLETION
+#### | TASK | refactor: Rename Habit model file name as Habits & Remove redundand habits and users model setters and getters with properties
+##### WHY
+- Because they are not used and needed at least for now --> `date` values are automatically created so as unique `id` values,
+`isActive` are set by default on creation and even on edit those values are defined inside sql queries WHERE and SET conditions,
+and `completion` are set 0 by default and later will be used similar as `isactive` inside sql queries WHERE and SET conditions, 
+ONLY `cateogry`, `title` and `description` are set by setters and get by betters
+##### WHAT
+- Removed getters and setters from Models\Habits and Models\Users
+- Didn't removed `isActive` setter and getter on Users model for development testing purposes (dashboard and archive `isActive` value display)
+##### HOW
+##### ALTERNATIVES
+- `__get` and `__set` magic methods. Not wanting to deep into abstractions for now just simpler getter and setter for now
+##### LEARNED
+##### FUTURE NOTES
+- Implement Data Mapper instead of Active Record Object pattern. For now it is too early to create for a simple application
+- Switch controller logic to MVC OOP-style instead of procedural style code
 
 
 ### 22/01/26
@@ -55,7 +90,6 @@ To get only user specifyc habits and not ones from other registered users
 ##### HOW
 - One-to-One Relationship
 - ON DELETE and UPDATE CASCADE
-
 ##### ALTERNATIVES
 - One-to-one realtion change with one-to-many
 ##### LEARNED

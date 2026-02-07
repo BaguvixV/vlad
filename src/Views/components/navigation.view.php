@@ -13,7 +13,7 @@
     </li>
     <?php else : ?>
     <li>
-      <a href="/dashboard" style="color:chocolate"><strong>Profile</strong></a>
+      <a href="/dashboard" style="color:chocolate"><strong>Dashboard</strong></a>
     </li>
     <li>
       <a href="/habit" style="color:teal"><strong>Create habit</strong></a>

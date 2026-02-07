@@ -5,51 +5,40 @@ namespace Models;
 use PDO;
 
 
-class Habit {
+class Habits
+{
   private const TABLE = 'habits';
-  private string $dateBacking;
   private string $categoryBacking;
-  private string $statusBacking;
   private string $titleBacking;
   private string $descriptionBacking;
-  private bool $isActiveBacking;
 
-  public function __construct(private ?PDO $connection = null) {
-    // intentionaly empty
+  public function __construct(private ?PDO $connection = null)
+  {
+    // intentionaly empty (PHP 8.0 feature that allows Constructor Property Promotion)
   }
 
-  public string $date {
-    get => $this->dateBacking;
-    set => $this->dateBacking = $value;
-  }
-
-  public string $category {
+  // Property Hooks feature below (intorduced in PHP 8.4)
+  public string $category
+  {
     get => $this->categoryBacking;
     set => $this->categoryBacking = strtolower(string: $value);
   }
 
-  public string $status {
-    get => $this->statusBacking;
-    set => $this->statusBacking = strtoupper(string: $value);
-  }
-
-  public string $title {
+  public string $title
+  {
     get => $this->titleBacking;
     set => $this->titleBacking = ucfirst(string: strtolower(string: $value));
   }
 
-  public string $description {
+  public string $description
+  {
     get => $this->descriptionBacking;
     set => $this->descriptionBacking = $value;
   }
 
-  public bool $isActive {
-    get => $this->isActiveBacking;
-    set => $this->isActiveBacking = (bool) $value;
-  }
-
   // create habit for specific user
-  public function create($forSpecificUser): bool {
+  public function create($forSpecificUser): bool
+  {
     $table = self::TABLE;
     $sql = "INSERT INTO {$table}
             (user_id, category, title, description)
@@ -67,7 +56,8 @@ class Habit {
   }
 
   // edit selected habit
-  public function edit(int|null $habitId): bool {
+  public function edit(int|null $id): bool
+  {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET category=:category, title=:title, description=:description
@@ -77,7 +67,7 @@ class Habit {
     $stmt = $this->connection->prepare($sql);
 
     return $stmt->execute([
-      ':habit_id' => $habitId,
+      ':habit_id' => $id,
       ':category' => $this->categoryBacking,
       ':title' => $this->titleBacking,
       ':description' => $this->description
@@ -85,7 +75,8 @@ class Habit {
   }
 
   // TODO: Later import database methods from Model.php
-  public function read(): array|null {
+  public function read(): array|null
+  {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}";
 
@@ -97,7 +88,8 @@ class Habit {
     return $output ? $output : null;
   }
 
-  public function findByUserId(int|null $userId): array|null {
+  public function findByUserId(int|null $userId): array|null
+  {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}
             WHERE is_active = 1
@@ -113,7 +105,8 @@ class Habit {
     return $output ? $output : null;
   }
 
-  public function findArchivedUserId(int|null $userId): array|null {
+  public function findArchivedUserId(int|null $userId): array|null
+  {
     $table = self::TABLE;
     $sql = "SELECT * FROM {$table}
             WHERE is_active = 0
@@ -129,7 +122,8 @@ class Habit {
     return $output ? $output : null;
   }
 
-  public function readById(int|null $habitId): array|null {
+  public function readById(int|null $habitId): array|null
+  {
     $table = self::TABLE;
     $sql = "SELECT *
             FROM {$table}
@@ -148,7 +142,8 @@ class Habit {
   }
 
   // delete habit
-  public function forceDelete(int|null $habitId): bool|string {
+  public function forceDelete(int|null $habitId): bool|string
+  {
     $table = self::TABLE;
     $sql = "DELETE 
             FROM {$table}
@@ -166,7 +161,8 @@ class Habit {
   }
 
   // soft delete
-  public function softDelete(int|null $habitId): bool|string {
+  public function softDelete(int|null $habitId): bool|string
+  {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET is_active = false
@@ -184,7 +180,8 @@ class Habit {
   }
 
   // reset soft-deleted habit
-  public function restore(int|null $habitId): bool|string {
+  public function restore(int|null $habitId): bool|string
+  {
     $table = self::TABLE;
     $sql = "UPDATE {$table}
             SET is_active = true

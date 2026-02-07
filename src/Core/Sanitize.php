@@ -5,7 +5,8 @@ namespace Core;
 
 abstract class Sanitize {
 
-  public static function string(?string $input): ?string {
+  public static function string(?string $input): ?string
+  {
     if ($input === null) {
       return null;
     }
@@ -23,7 +24,8 @@ abstract class Sanitize {
   }
 
 
-  public static function integer(?string $input): ?string {
+  public static function integer(?string $input): ?string
+  {
     if ($input === null) {
       return null;
     }
@@ -38,7 +40,8 @@ abstract class Sanitize {
   }
 
 
-  public static function email(?string $input): ?string {
+  public static function email(?string $input): ?string
+  {
     if ($input === null) {
       return null;
     }
@@ -53,7 +56,8 @@ abstract class Sanitize {
   }
 
 
-  public static function password(?string $input): ?string {
+  public static function password(?string $input): ?string
+  {
     if ($input === null) {
       return null;
     }

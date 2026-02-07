@@ -4,7 +4,8 @@ namespace Http\Requests;
 
 
 
-abstract class AuthFromValidation {
+abstract class AuthFromValidation
+{
 
   protected array $errors = [];
 
@@ -24,17 +25,20 @@ abstract class AuthFromValidation {
   protected string $phoneRegex = '/^(2\d{7}|6\d{7})$/';
 
 
-  public function __construct(public object $user) {
-    // intentionaly empty
+  public function __construct(public object $user)
+  {
+    // intentionaly empty (PHP 8.0 feature that allows Constructor Property Promotion)
   }
 
 
-  public function errors() {
+  public function errors()
+  {
     return $this->errors;
   }
 
 
-  public function validateName(?string $name) {
+  public function validateName(?string $name)
+  {
     if (is_null($name)) {
       $this->errors['name'] = 'Name input field is empty!';
       return;
@@ -57,7 +61,8 @@ abstract class AuthFromValidation {
     }
   }
 
-  public function validateSurname(?string $surname) {
+  public function validateSurname(?string $surname)
+  {
     if (is_null($surname)) {
       $this->errors['surname'] = 'Surname input field is empty!';
       return;
@@ -73,14 +78,16 @@ abstract class AuthFromValidation {
       return;
     }
 
-    if (! preg_match($this->namingRegex, $surname)) {
+    if (! preg_match($this->namingRegex, $surname))
+    {
       $safeSurname = htmlspecialchars($surname);
       $this->errors['surname'] = "Incorrect surname: \"<strong>$safeSurname</strong>\" --> format! Allowed letters (including Latvian) and spaces.";
       return;
     }
   }
 
-  public function validateAge(?string $age) {
+  public function validateAge(?string $age)
+  {
     if (is_null($age)) {
       $this->errors['age'] = 'Age input field is empty!';
       return;
@@ -103,7 +110,8 @@ abstract class AuthFromValidation {
     }
   }
 
-  public function validateEmail(?string $email) {
+  public function validateEmail(?string $email)
+  {
     if (is_null($email)) {
       $this->errors['email'] = 'Email input field is empty!';
       return;
@@ -126,7 +134,8 @@ abstract class AuthFromValidation {
     }
   }
 
-  public function validatePassword(?string $password) {
+  public function validatePassword(?string $password)
+  {
     if (is_null($password)) {
       $this->errors['password'] = 'Password input field is empty!';
       return;
@@ -142,14 +151,16 @@ abstract class AuthFromValidation {
       return;
     }
 
-    if (! preg_match($this->passwordRegex, $password)) {
+    if (! preg_match($this->passwordRegex, $password))
+    {
       $safePassword = htmlspecialchars($password);
       $this->errors['password'] = "Incorrect password: \"<strong>$safePassword</strong>\" --> format! Use at least 6 chars, 1 uppercase, 1 lowercase, 1 digit, 1 symbol.";
       return;
     }
   }
 
-  public function validateRePassword(?string $password, ?string $rePassword) {
+  public function validateRePassword(?string $password, ?string $rePassword)
+  {
     if (is_null($rePassword)) {
       $this->errors['rePassword'] = 'Repeated password input field is empty!';
       return;
@@ -161,7 +172,8 @@ abstract class AuthFromValidation {
     }
   }
 
-  public function validatePhone(?string $phone) {
+  public function validatePhone(?string $phone)
+  {
     if (is_null($phone)) {
       $this->errors['phone'] = 'Phone password input field is empty!';
       return;
@@ -172,7 +184,8 @@ abstract class AuthFromValidation {
       return;
     }
 
-    if (! preg_match($this->phoneRegex, $phone)) {
+    if (! preg_match($this->phoneRegex, $phone))
+    {
       $safePhone = htmlspecialchars($phone);
       $this->errors['phone'] = "Incorrect phone: \"<strong>$safePhone</strong>\" --> format! Latvian phone numbers starts with 2 or 6, with total 8 digits";
       return;
@@ -180,7 +193,8 @@ abstract class AuthFromValidation {
   }
 
 
-  public function validateLoginEmail(?string $email) {
+  public function validateLoginEmail(?string $email)
+  {
     if (is_null($email)) {
       $this->errors['email'] = 'Email input field is empty!';
       return;
@@ -203,7 +217,8 @@ abstract class AuthFromValidation {
     }
   }
 
-  public function validateLoginPassword(?string $password) {
+  public function validateLoginPassword(?string $password)
+  {
     if (is_null($password)) {
       $this->errors['password'] = 'Password input field is empty!';
       return;
@@ -219,7 +234,8 @@ abstract class AuthFromValidation {
       return;
     }
 
-    if (! preg_match($this->passwordRegex, $password)) {
+    if (! preg_match($this->passwordRegex, $password))
+    {
       $safePassword = htmlspecialchars($password);
       $this->errors['password'] = "Incorrect password: \"<strong>$safePassword</strong>\" --> format! Use at least 6 chars, 1 uppercase, 1 lowercase, 1 digit, 1 symbol.";
       return;

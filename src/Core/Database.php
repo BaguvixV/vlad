@@ -7,11 +7,13 @@ use PDOException;
 use RuntimeException;
 
 
-class Database {
+class Database
+{
   private ?PDO $connection = null;
 
-  public function __construct(private array $config) {
-    // intentionaly empty
+  public function __construct(private array $config)
+  {
+    // intentionaly empty (PHP 8.0 feature that allows Constructor Property Promotion)
   }
 
   public function connect(): ?PDO
