@@ -43,6 +43,10 @@
 ##### FUTURE NOTES
 
 
+### 08/02/26
+- Worked on main project >2h (skipped this project tasks for today)
+
+
 ### untracked because of other priorities was set at this time gap [job leaving process]
 #### | TASK | refactor: Re-evaluate controller structure toward OOP MVC approach
 ##### WHY
