@@ -1,111 +1,181 @@
-# 🧱 Daily Status Log
+# 🧱 Daily Engineering Log
 
-> **Purpose:** Track learning consistency and incremental progress.
+> **Purpose:** Track consistency, thinking process, and incremental progress.  
+> Sessions: ~1-2h unless stated otherwise.
 
-> Sessions are ~1-2h unless noted otherwise.
-
-### Why this exists
+## 🎯 Why this exists
 - Removes guilt on "imperfect" days
-- Lets study-only days without feature pressure
-- Gives reason to commit every day (habit consistency)
+- Allows study-only days without feature pressure
+- Enforces daily commit (habit consistency)
 - Keeps a clean, chronological history
-- Allows commiting progress notes alongside code
+- Captures *why* not just *what*
 
 
 ---
 
-### For Context
-- 📌 Planned (not started)
-- 🛠️ Working on (learning / partial progress)
-- ✅ Completed (shipped / commited)
-- ❌ Missed (intentionally skipped)
-- 🚨 Important note
+## 📅 20-21/02/26 - Planned
+### COMMIT
+```bash
+feat: Display only habits with checkboxes on dashboard
+```
+### WHY |  |  |
+### WHAT |  |  |
+### HOW |  |  |
+### ALTERNATIVES |  |  |
+### LEARNED |  |  |
+### FUTURE NOTES |  |  |
+
+---
 
 
+## 📅 17-19/02/26 - Planned
+
+### COMMIT
+```bash
+feat: Make routing work with parameters on urls like (`/post/123`)
+```
+### WHY |  |  |
+### WHAT |  |  |
+### HOW |  |  |
+### ALTERNATIVES |  |  |
+### LEARNED |  |  |
+### FUTURE NOTES |  |  |
+
+---
 
 
-### 📌 09/02/26 📌
-#### | TASK | feat: Display only habits with checkboxes on dashboard page
-##### WHY
-##### WHAT
-##### HOW
-##### ALTERNATIVES
-##### LEARNED
-##### FUTURE NOTES
+## 📅 16/02/26
 
-### 📌 08/02/26 📌
-#### | TASK | feat: Parse URL to extract parameters to handle routing (e.g. /post/123)
-##### WHY
-##### WHAT
-##### HOW
-##### ALTERNATIVES
-##### LEARNED
-##### FUTURE NOTES
+### COMMIT
+```bash
+refactor: Make code prettier
+```
+### WHY
+- To make it eaeir to read for later on
+### WHAT
+- Added extra spaces
+### ALTERNATIVES
+- To skip this refatcoring but later on risk on code bad readability
+
+---
 
 
-### 08/02/26
-- Worked on main project >2h (skipped this project tasks for today)
+## 📅 09/02/26
+
+- Focus: >2h  
+- Worked on main project.  
+- Skipped side project tasks intentionally.
+
+---
 
 
-### untracked because of other priorities was set at this time gap [job leaving process]
-#### | TASK | refactor: Re-evaluate controller structure toward OOP MVC approach
-##### WHY
-- To make OOP MVC-style code instead of procedural code
-- Make CRUD inside one controller instead of separate on each method their own php file
-##### WHAT
-- Create Application, Request core files inside src\Core directory.
-- Switched from one folder many actions (also all with precedural programming style) to one controller with many actions the OOP-style
-##### LEARNED
-- Dived deeper into running application from Application file
-##### FUTURE NOTES
-- Parse URL to extract parameters
-##### ADDITIONAL/EXTRA
-- Renamed Habit model file name as Habits un User as Users
+## 📅 08/02/26
+
+- Focus: >2h  
+- Worked on main project.  
+- Skipped side project tasks intentionally.
+
+---
 
 
-### 23&25/01/26 CHANGED MY MIND IN MID TASK COMPLETION
-#### | TASK | refactor: Rename Habit model file name as Habits & Remove redundand habits and users model setters and getters with properties
-##### WHY
+### 🧭 Architecture Refactor Phase (Untracked Period)
+
+> Context: Job leaving process
+
+---
+
+### COMMIT
+```bash
+refactor: Re-evaluate controller structure toward OOP MVC approach
+```
+
+### WHY
+- Transition from procedural to MVC-based OOP structure
+- Make CRUD inside one controller instead of separate on each method their own PHP file
+- Improve maintainability and scalability
+
+### WHAT
+- Created `Application` and `Request` core files inside `src/Core`
+- Moved from multiple procedural action files to one controller with multiple OOP-style actions
+
+### LEARNED
+- Deeper understanding of application bootstrap flow
+- Better clarity on entry point responsibility
+
+### FUTURE NOTES
+- Implement URL parameter parsing
+- Continue MVC refinement
+
+### EXTRA
+- Renamed `Habit` → `Habits`
+- Renamed `User` → `Users`
+
+---
+
+
+## 📅 23&25/01/26 📅 CHANGED MY MIND IN MID TASK COMPLETION
+### COMMIT
+```bash
+refactor: Rename Habit model file name as Habits & Remove redundand habits and users model setters and getters with properties
+```
+
+### WHY
 - Because they are not used and needed at least for now --> `date` values are automatically created so as unique `id` values,
 `isActive` are set by default on creation and even on edit those values are defined inside sql queries WHERE and SET conditions,
 and `completion` are set 0 by default and later will be used similar as `isactive` inside sql queries WHERE and SET conditions, 
 ONLY `cateogry`, `title` and `description` are set by setters and get by betters
-##### WHAT
+
+### WHAT
 - Removed getters and setters from Models\Habits and Models\Users
 - Didn't removed `isActive` setter and getter on Users model for development testing purposes (dashboard and archive `isActive` value display)
-##### HOW
-##### ALTERNATIVES
+
+### ALTERNATIVES
 - `__get` and `__set` magic methods. Not wanting to deep into abstractions for now just simpler getter and setter for now
-##### LEARNED
-##### FUTURE NOTES
+
+### LEARNED
+
+### FUTURE NOTES
 - Implement Data Mapper instead of Active Record Object pattern. For now it is too early to create for a simple application
 - Switch controller logic to MVC OOP-style instead of procedural style code
 
+---
 
-### 22/01/26
-#### | TASK | feat: List logged-in user created habits on dashboard and archive pages
-##### WHY
+
+## 📅 22/01/26
+
+### COMMIT
+```bash
+feat: List logged-in user created habits on dashboard and archive pages
+```
+
+### WHY
 To get only user specifyc habits and not ones from other registered users
-##### WHAT
+
+### WHAT
 - Added `user_id` foreign key to `habit` table
 - Create `findByUserID(int|null $userID)` and `findArchivedUserId(int|null $userID)` class method in Habit model
 - Renamed habit.id table and column to habits.habit_id
 - Renamed users.id column to users.user_id
-##### HOW
+
+### HOW
 - One-to-One Relationship
 - ON DELETE and UPDATE CASCADE
-##### ALTERNATIVES
+
+### ALTERNATIVES
 - One-to-one realtion change with one-to-many
-##### LEARNED
+
+### LEARNED
 - Relation meaning in relational database
 - That in it is redundand to type `docker compose build` each time I type `docker compose down` when adding some changes in docker-compose.yml file and that `docker compose up` is just enough for example to add latest migrations folder changes into database
 - Also if I am using not detached mode then ctrl+c key combination just stops running containers without removing containers and networks (optionally images and volumes as well) as if `docker compose down` do
-##### FUTURE NOTES
+
+### FUTURE NOTES
 - Probably will improve finding methods by making it static and also making it a bit more universal for preventing find type method redundancy
 
+---
 
 
-### 21/01/26 (Focus: 3h 16min)
+## 📅 21/01/26 (Focus: 3h 16min)
 ```md
 feat: Complete habit CRUD with validation, soft-delete, restore, and archived view
 
@@ -117,25 +187,25 @@ feat: Complete habit CRUD with validation, soft-delete, restore, and archived vi
 ```
 
 
-### 17/01/26 (Focus: 1h 15min)
+## 📅 17/01/26 (Focus: 1h 15min)
 ```md
 wip/feat: Add habit creation with validation and improve Habit model type safety
 ```
 
 
-### 🛠️ 15/01/2026 (Focus: Xh Ymin)
+## 📅️ 15/01/2026
 ```md
 wip/feat: Enhance router and extend habit CRUD with soft/force delete, restore and show
 ```
 
 
-### 🛠️ 14/01/2026 (Focus: 2h 4min)
+## 📅 14/01/2026 (Focus: 2h 4min)
 ```md
 wip/feat: Router enchancement
 ```
 
 
-### 14/01/2026 (Focus: 1h 10min)
+## 📅 14/01/2026 (Focus: 1h 10min)
 ```md
 refactor(views): Simplify folder and fike structure & restore Views naming
 
@@ -145,14 +215,14 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 ```
 
 
-### 12/01/2026 (Focus: 52min)
+## 📅 12/01/2026 (Focus: 52min)
 ```md
 12/01 ✅ refactor(auth): Move registration DB logic back to controller and clean up validation responsibilities
 ```
 
 
 
-## ✅ 10/01/2026 - 11/01/2026 (Focus: 9h 20min)
+## 📅 10/01/2026 - 11/01/2026 (Focus: 9h 20min)
 
 **Focus:** feat: User login and Validation architecture
 
@@ -165,18 +235,16 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 - 10/01 🚨 Caught myself on thinking about wrong placement for checking functions/methods inside RegisterForm and LoginForm
 ```
 
-### 🛠️ Daily Breakdown
+## 📅 11/01/26 (Focus: 4h 57min)
 ```md
-#### 11/01/26 (Focus: 4h 57min)
-
 - ✅ Implement user login flow
 - ✅ Extend Requests\AuthFormValidation.php and Requests\LoginFrom with login-specifyc validation rules
 - ✅ Add 'Create habit' navigation link visible for users who are logged-in
 ```
 
-```md
-#### 10/01/26 (Focus: 4h 22min)
 
+## 📅 10/01/26 (Focus: 4h 22min)
+```md
 - 🛠️ Implement user login flow
 - ✅ Add logout feature for users who are logged-in
 - 🛠️ Extend Requests\AuthFormValidation.php and Requests\LoginFrom with login-specifyc validation rules
@@ -185,12 +253,12 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 
 
 
-## 🛠️ 07/01/26 - 09/01/26 (Focus: 12h 9min)
+## 📅️ 07/01/26 - 09/01/26 (Focus: 12h 9min)
 
 - feat: User registration, input sanitization, form-specific validation, and password security
 
-```md
 ### 🛠️ Overall Progress:
+```md
 - 09/01 ✅ Create user dashboard route with default forbidden 403 and redirect after registration
 - 09/01 ✅ Display dashboard page for existing user session
 - 09/01 ✅ Hide register and login navitaion links when user is registered/logged-in
@@ -205,10 +273,8 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 - 07/01 ✅ Create Response model for HTTP status codes (400, 401, 403, 404, 405)
 ```
 
-### 🛠️ Daily Breakdown
+## 📅 09/01/26 (Focus: 7h 23min)
 ```md
-#### 09/01/26 (Focus: 7h 23min)
-
 - ✅ Implement input sanitization and form-specific validation
 - ✅ Implement full user registration flow
 - ✅ Rename FormValidation.php to AuthFormValidation.php
@@ -221,9 +287,8 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 - ✅ Enchance user migrations SQL table
 ```
 
+## 📅️ 08/01/26 (Focus: 3h 08min)
 ```md
-#### 🛠️ 08/01/26 (Focus: 3h 08min)
-
 - ✅ Rename Validator model to Sanitizer
 - 🛠️ Implement input sanitization and form-specific validation
 - 🛠️ Implement user registration flow
@@ -232,9 +297,8 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 - ✅ Generate and store password hash (after raw password validation) on user creation
 ```
 
+## 📅️ 07/01/26 (Focus: 1h 38min)
 ```md
-#### 🛠️ 07/01/26 (Focus: 1h 38min)
-
 - 🛠️ Implement user registration flow
 - 🛠️ Extend Requests\FormValidation.php and Requests\Register with register-specific validation rules
 - 📌 Generate and store password hash (after raw password validation) on user creation
@@ -242,7 +306,7 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 
 
 
-## ✅ 06/01/2026
+## 📅 06/01/2026
 
 **Focus ~5h:** refactor: Enchance router, improve folder structure and validation architecture
 
@@ -261,7 +325,7 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 
 
 
-## ✅ 05/01/2026
+## 📅 05/01/2026
 
 **Focus ~4h:** Refactor models, fix database connection and display DB data on website
 
@@ -285,7 +349,7 @@ refactor(views): Simplify folder and fike structure & restore Views naming
 
 
 
-## ✅ 04/01/2026
+## 📅 04/01/2026
 
 **Focus:** Docker & core architecture  
 
@@ -301,7 +365,7 @@ git commit -m "feat: Add PHP 8.4 Docker support and initial OOP models
 
 
 
-## ✅ 29/12/2025
+## 📅 29/12/2025
 
 ```bash
 git commit -m "feat(core): Add autoloader, config, and PDO database connection
@@ -314,7 +378,7 @@ git commit -m "feat(core): Add autoloader, config, and PDO database connection
 
 
 
-## ✅ 28/12/2025
+## 📅 28/12/2025
 
 ```bash
 git commit -m "doc: Improve documentation"

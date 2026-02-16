@@ -7,14 +7,15 @@ use Http\Requests\AuthFromValidation;
 final class LoginForm extends AuthFromValidation
 {
 
-  public function login(
-                      ?string $email,
-                      ?string $password): bool {
+   public function login(
+      ?string $email,
+      ?string $password): bool
+   {
 
-    $this->validateLoginEmail(email: $email);
-    $this->validateLoginPassword(password: $password);
+      $this->validateLoginEmail(email: $email);
+      $this->validateLoginPassword(password: $password);
 
-    return empty($this->errors);
-  }
+      return empty($this->errors);
+   }
 
 }

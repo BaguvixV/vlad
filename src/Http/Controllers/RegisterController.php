@@ -3,6 +3,7 @@
 namespace Http\Controllers;
 
 use Core\Controller;
+
 // Rest `use` are for store function
 use Core\Response;
 use Core\Config;
@@ -15,137 +16,137 @@ use Core\Sanitize;
 class RegisterController extends Controller
 {
 
-  // render register page view
-  public function index()
-  {
-    $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
-    $this->renderView(
-      path: 'auth/register/index.view.php',
-      data: [
-       'heading' => 'Register Page',
-       'loggedInUserEmail' => $loggedInUserEmail
-      ]
-    );
-  }
-
-
-  // user register functionality
-  public function store()
-  {
-    // Method Check (POST only)
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-      abort(status: Response::METHOD_NOT_ALLOWED);
-    }
-
-    $db = new Database(config: Config::database());
-    $pdo = $db->connect();
-
-    $userModel = new Users(connection: $pdo);
-
-    $formValidatinModel = new RegisterForm(user: $userModel);
-
-    // Sanitize variables before validating
-    $name = Sanitize::string(input: $_POST['name']);
-    $surname = Sanitize::string(input: $_POST['surname']);
-    $age = Sanitize::integer(input: $_POST['age']);
-    $email = Sanitize::email(input: $_POST['email']);
-    $password = Sanitize::password($_POST['password']);
-    $repeatedPassword = Sanitize::password($_POST['rePassword']);
-    $phone = Sanitize::string(input: $_POST['phone']);
-
-    // Register from-specific validation
-    $isValid = $formValidatinModel->register($name, $surname, $age, $email, $password, $repeatedPassword, $phone);
-
-    if (! $isValid) {
-      $errors = $formValidatinModel->errors();
+   // render register page view
+   public function index()
+   {
       $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
-      // Pass error and old form into the template
       $this->renderView(
-        'auth/register/index.view.php',[
-          'old' => $_POST,
-          'error' => $errors,
-          'loggedInUserEmail' => $loggedInUserEmail,
-          'heading' => "Register Page",
-          'generalError' => 'Validation Error!'
-        ]
+         path: 'auth/register/index.view.php',
+         data: [
+            'heading' => 'Register Page',
+            'loggedInUserEmail' => $loggedInUserEmail
+         ]
       );
+   }
 
-      // Stop further proccess
-      return;
-    }
 
-    // Hash password
-    $password_hash = password_hash($password, PASSWORD_DEFAULT);
+   // user register functionality
+   public function store()
+   {
+      // Method Check (POST only)
+      if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+         abort(status: Response::METHOD_NOT_ALLOWED);
+      }
 
-    // Convert age sanitizez number format inside string as an strict integer
-    $age_int = (int)$age;
+      $db = new Database(config: Config::database());
+      $pdo = $db->connect();
 
-    $existingUserByProvidedEmil = $userModel->findUserByEmail(localEmail: $email);
+      $userModel = new Users(connection: $pdo);
 
-    $existingUserByProvidedPhone = $userModel->findUserByPhone(localPhone: $phone);
+      $formValidatinModel = new RegisterForm(user: $userModel);
 
-    if ($existingUserByProvidedEmil) {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
+      // Sanitize variables before validating
+      $name = Sanitize::string(input: $_POST['name']);
+      $surname = Sanitize::string(input: $_POST['surname']);
+      $age = Sanitize::integer(input: $_POST['age']);
+      $email = Sanitize::email(input: $_POST['email']);
+      $password = Sanitize::password($_POST['password']);
+      $repeatedPassword = Sanitize::password($_POST['rePassword']);
+      $phone = Sanitize::string(input: $_POST['phone']);
 
-      // Pass error and old form into the template
-      $this->renderView(
-        'auth/register/index.view.php',[
-          'old' => $_POST,
-          'heading' => "Register Page",
-          'loggedInUserEmail' => $loggedInUserEmail,
-          'generalError' => 'Someone is already using this e-mail address'
-        ]
-      );
+      // Register from-specific validation
+      $isValid = $formValidatinModel->register($name, $surname, $age, $email, $password, $repeatedPassword, $phone);
 
-      // Stop further proccess
-      return;
-    }
+      if (!$isValid) {
+         $errors = $formValidatinModel->errors();
+         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
-    if ($existingUserByProvidedPhone) {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
+         // Pass error and old form into the template
+         $this->renderView(
+            'auth/register/index.view.php', [
+               'old' => $_POST,
+               'error' => $errors,
+               'loggedInUserEmail' => $loggedInUserEmail,
+               'heading' => "Register Page",
+               'generalError' => 'Validation Error!'
+            ]
+         );
 
-      // Pass error and old form into the template
-      $this->renderView(
-        'auth/register/index.view.php',[
-          'old' => $_POST,
-          'loggedInUserEmail' => $loggedInUserEmail,
-          'heading' => "Register Page",
-          'generalError' => 'Someone is already using this phone number'
-        ]
-      );
+         // Stop further proccess
+         return;
+      }
 
-      // Stop further proccess
-      return;
-    }
+      // Hash password
+      $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    // Set data inside User Model
-    $userModel->name = $name;
-    $userModel->surname = $surname;
-    $userModel->age = $age_int;
-    $userModel->email = $email;
-    $userModel->password = $password_hash;
-    $userModel->phone = $phone;
+      // Convert age sanitizez number format inside string as an strict integer
+      $age_int = (int)$age;
 
-    // Create / Register user
-    if ($userModel->register()) {
+      $existingUserByProvidedEmil = $userModel->findUserByEmail(localEmail: $email);
 
-      $createdUserInfo = $userModel->findUserByEmail($userModel->email);
+      $existingUserByProvidedPhone = $userModel->findUserByPhone(localPhone: $phone);
 
-      $_SESSION['user'] = [
-        'id' => $createdUserInfo['user_id'],
-        'name' => $createdUserInfo['name'],
-        'email' => $createdUserInfo['email'],
-        'is_active' => $createdUserInfo['is_active'],
-      ];
+      if ($existingUserByProvidedEmil) {
+         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
-      header('Location: /dashboard');
-      exit();
+         // Pass error and old form into the template
+         $this->renderView(
+            'auth/register/index.view.php', [
+               'old' => $_POST,
+               'heading' => "Register Page",
+               'loggedInUserEmail' => $loggedInUserEmail,
+               'generalError' => 'Someone is already using this e-mail address'
+            ]
+         );
 
-    }
+         // Stop further proccess
+         return;
+      }
 
-    dd('Something went wrong on user registration!');
+      if ($existingUserByProvidedPhone) {
+         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
-  }
+         // Pass error and old form into the template
+         $this->renderView(
+            'auth/register/index.view.php', [
+               'old' => $_POST,
+               'loggedInUserEmail' => $loggedInUserEmail,
+               'heading' => "Register Page",
+               'generalError' => 'Someone is already using this phone number'
+            ]
+         );
+
+         // Stop further proccess
+         return;
+      }
+
+      // Set data inside User Model
+      $userModel->name = $name;
+      $userModel->surname = $surname;
+      $userModel->age = $age_int;
+      $userModel->email = $email;
+      $userModel->password = $password_hash;
+      $userModel->phone = $phone;
+
+      // Create / Register user
+      if ($userModel->register()) {
+
+         $createdUserInfo = $userModel->findUserByEmail($userModel->email);
+
+         $_SESSION['user'] = [
+            'id' => $createdUserInfo['user_id'],
+            'name' => $createdUserInfo['name'],
+            'email' => $createdUserInfo['email'],
+            'is_active' => $createdUserInfo['is_active'],
+         ];
+
+         header('Location: /dashboard');
+         exit();
+
+      }
+
+      dd('Something went wrong on user registration!');
+
+   }
 }
