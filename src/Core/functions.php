@@ -36,3 +36,9 @@ function abort(int $status = 404): void
    require view("error/{$status}.view.php");
    die();
 }
+
+function redirect(string $path)
+{
+   header("Location: {$path}");
+exit();
+}

@@ -13,33 +13,37 @@
 
 ---
 
-## 📅 20-21/02/26 - Planned
+## 📅 26/02/26 - Planned
 ### COMMIT
 ```bash
 feat: Display only habits with checkboxes on dashboard
 ```
-### WHY |  |  |
-### WHAT |  |  |
-### HOW |  |  |
-### ALTERNATIVES |  |  |
-### LEARNED |  |  |
-### FUTURE NOTES |  |  |
 
 ---
 
 
-## 📅 17-19/02/26 - Planned
+## 📅 23-25/02/26
 
 ### COMMIT
 ```bash
-feat: Make routing work with parameters on urls like (`/post/123`)
+refactor: Support dynamic route parameters & Improve UserController CRUD
+
+- Added dynamic route parameters for users and habits (e.g., /habit/{id})
+- Separated dashboard (private) and profile (public) routes
+- Skipped stict types for $userId and $habitId to simplify pre-junior routing
+- Handling invalid route parameters with 404
+- Added htmlspecialchars() outputs for basic XSS prevention
+- Adopted REST-style approach for CRUD operations
+- Created reditect() function to shorten code dublication
+- Fixed method check on habit and user controllers
 ```
-### WHY |  |  |
-### WHAT |  |  |
-### HOW |  |  |
-### ALTERNATIVES |  |  |
-### LEARNED |  |  |
-### FUTURE NOTES |  |  |
+
+---
+
+## 📅 ~17-22/02/26
+
+### IMPORTANT NOTE
+- was ill
 
 ---
 
@@ -51,11 +55,11 @@ feat: Make routing work with parameters on urls like (`/post/123`)
 refactor: Make code prettier
 ```
 ### WHY
-- To make it eaeir to read for later on
+- To make it easier to read for later on
 ### WHAT
 - Added extra spaces
 ### ALTERNATIVES
-- To skip this refatcoring but later on risk on code bad readability
+- To skip this refactoring but later on risk on code bad readability
 
 ---
 

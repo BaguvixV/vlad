@@ -7,10 +7,7 @@ class Request
 {
    public function getUrl()
    {
-      // return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
-      $uri = $_SERVER['REQUEST_URI'];
-      // dd($uri);
-      return $uri ?? '/';
+      return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?? '/';
    }
 
    public function getMethod()

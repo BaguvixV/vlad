@@ -88,71 +88,61 @@ class HabitController extends \Core\Controller
 
       // crete habit for spefific user
       if ($habitsModel->create(forSpecificUser: $loggedInUserId)) {
-         header('Location: /dashboard');
-         exit;
+         return redirect('/dashboard');
       }
 
-      // non-production / development error output
+      // fallback / non-production / development error output
       dd('Something went wrong on habit creation!');
    }
 
 
    // habit delete functionality
-   public function destroy()
+   public function destroy($habitId)
    {
+      $habitId = (int) $habitId;
+
       // method Check (POST only with DELETE method spoof)
-      if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_POST['__spoof_method'] !== 'DELETE') {
+      if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $_POST['__spoof_method'] !== 'DELETE') {
          abort(status: Response::METHOD_NOT_ALLOWED);
       }
-
-
-      $getHabitId = $_GET['id'] ?? null;
-
-      $db = new Database(config: Config::Database());
-      $pdo = $db->connect();
-
-      $habitsModel = new Habit(connection: $pdo);
-
-
-      $destroySpecificHabit = $habitsModel->forceDelete(habitId: $getHabitId);
-
-
-      if ($destroySpecificHabit) {
-         header('Location: /archived');
-         exit();
-      }
-
-
-      dd('Unable to force-delete habit.');
-   }
-
-
-   // habit soft-delete functionality
-   public function patch()
-   {
-      // method Check (POST only with PATCH method spoof)
-      if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_POST['__spoof_method'] !== 'PATCH') {
-         abort(status: Response::METHOD_NOT_ALLOWED);
-      }
-
-
-      $getHabitId = $_GET['id'] ?? null;
 
       $db = new Database(config: Config::Database());
       $pdo = $db->connect();
 
       $habitsModel = new Habits(connection: $pdo);
-
-
-      $destroySpecificHabit = $habitsModel->softDelete(habitId: $getHabitId);
-
+      $destroySpecificHabit = $habitsModel->forceDelete(habitId: $habitId);
 
       if ($destroySpecificHabit) {
-         header('Location: /dashboard');
+         return redirect('/archived');
+      }
+
+      // fallback / non-production / development error output
+      dd('Unable to force-delete habit.');
+   }
+
+
+   // habit soft-delete functionality
+   public function patch($habitId)
+   {
+      $habitId = (int) $habitId;
+
+      // method Check (POST only with PATCH method spoof)
+      if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $_POST['__spoof_method'] !== 'PATCH') {
+         abort(status: Response::METHOD_NOT_ALLOWED);
+      }
+
+      $db = new Database(config: Config::Database());
+      $pdo = $db->connect();
+
+      $habitsModel = new Habits(connection: $pdo);
+      $softDeleteHabit = $habitsModel->softDelete(habitId: $habitId);
+
+      if ($softDeleteHabit) {
+         return redirect('/dashboard');
          exit();
       }
 
-
+      // fallback / non-production / development error output
       dd('Unable to soft-delete habit.');
    }
 
@@ -169,7 +159,6 @@ class HabitController extends \Core\Controller
       $habitsModel = new Habits(connection: $pdo);
       $habits = $habitsModel->findArchivedUserId(userId: $loggedInUserId);
 
-
       $this->renderView(
          path: 'habit/archived.view.php',
          data: [
@@ -181,60 +170,63 @@ class HabitController extends \Core\Controller
    }
 
    // habit restore functionality
-   public function restore()
+   public function restore($habitId)
    {
+      $habitId = (int) $habitId;
+
       // method Check (POST only with PATCH method spoof)
-      if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_POST['__spoof_method'] !== 'PATCH') {
+      if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $_POST['__spoof_method'] !== 'PATCH') {
          abort(status: Response::METHOD_NOT_ALLOWED);
       }
-
-      $getHabitId = $_GET['id'] ?? null;
 
       $db = new Database(config: Config::Database());
       $pdo = $db->connect();
 
       $habitsModel = new Habits(connection: $pdo);
+      $restoreHabit = $habitsModel->restore(habitId: $habitId);
 
-
-      $destroySpecificHabit = $habitsModel->restore(habitId: $getHabitId);
-
-
-      if ($destroySpecificHabit) {
-         header('Location: /dashboard');
-         exit();
+      if ($restoreHabit) {
+         return redirect('/dashboard');
       }
 
-
+      // fallback / non-production / development error output
       dd('Unable to restore habit.');
    }
 
 
    // habit update functionality
-   public function put()
+   public function put($habitId)
    {
+      $loggedInUserId = $_SESSION['user']['id'] ?? null;
+
+      $habitId = (int) $habitId;
+
       // method Check (POST only with PUT method spoof)
-      if ($_SERVER['REQUEST_METHOD'] !== 'POST' && $_POST['__spoof_method'] !== 'PUT') {
+      if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $_POST['__spoof_method'] !== 'PUT') {
          abort(status: Response::METHOD_NOT_ALLOWED);
       }
-
-      $getReqHabitId = $_GET['id'] ?? null;
 
       $db = new Database(config: Config::database());
       $pdo = $db->connect();
 
       $habitsModel = new Habits(connection: $pdo);
-      $habit = $habitsModel->readById(habitId: $getReqHabitId);
+      $habit = $habitsModel->readById(habitId: $habitId);
+      if (!$habit) {
+         abort(status: Response::NOT_FOUND); // habit does not exist
+      }
       $habit = $habit[0];
 
+      // check ownership
+      if ($habit['user_id'] !== $loggedInUserId) {
+         abort(status: Response::FORBIDDEN); // only owner can edit
+      }
 
       $formValidatinModel = new EditHabit(habit: $habitsModel);
-
 
       // sanitize $_POST inputs before validating
       $category = Sanitize::string(input: $_POST['category']);
       $title = Sanitize::string(input: $_POST['title']);
       $description = Sanitize::string(input: $_POST['description']);
-
 
       // habit form spicific validaiton
       $isValid = $formValidatinModel->validateEditFrom($category, $title, $description);
@@ -264,37 +256,50 @@ class HabitController extends \Core\Controller
       $habitsModel->title = $title;
       $habitsModel->description = $description;
 
-      // edit habit by id
-      if ($habitsModel->edit(id: $habit['habit_id'])) {
-         header('Location: /dashboard');
-         exit;
+      // edit habit using the route parameter
+      if ($habitsModel->edit(id: $habitId)) {
+         return redirect('/dashboard');
       }
 
-      // non-production / development error output
+      // fallback / non-production / development error output
       dd('Something went wrong on habit editing :)');
    }
 
 
    // show single habit page
-   public function show()
+   public function show($habitId)
    {
+      $habitId = (int) $habitId;
+
+      $loggedInUserId = $_SESSION['user']['id'] ?? null;
       $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
+      if (!$loggedInUserEmail || !$loggedInUserEmail) {
+         abort(status: Response::UNAUTHORIZED);
+      }
 
       $db = new Database(config: Config::Database());
       $pdo = $db->connect();
 
-      $habitsModel = new Habit(connection: $pdo);
-      $habit = $habitsModel->readById(habitId: $_GET['id']);
-      $habit = $habit[0];
+      $habitsModel = new Habits(connection: $pdo);
+      $habit = $habitsModel->readById(habitId: $habitId);
 
+      if (!$habit) {
+         abort();
+      } else {
+         $habit = $habit[0];
+      }
+
+      if ($habit['user_id'] !== $loggedInUserId) {
+         abort(status: Response::FORBIDDEN);
+      }
 
       $this->renderView(
          path: 'habit/show.view.php',
          data: [
             'loggedInUserEmail' => $loggedInUserEmail,
             'habit' => $habit,
-            'heading' => "Habit Nr.{$habit['habit_id']}"
+            'heading' => "Habit Nr.{$habitId}"
          ]
       );
    }

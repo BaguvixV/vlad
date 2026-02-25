@@ -119,6 +119,23 @@ class Users
         return $output ? $output : null;
     }
 
+   public function findUserById(int|null $value): array|null
+   {
+      $table = self::TABLE;
+      $sql = "SELECT *
+            FROM {$table}
+            WHERE user_id = :id
+    ";
+
+      $stmt = $this->connection->prepare(query: $sql);
+      $stmt->bindParam(':id', $value);
+      $stmt->execute();
+
+      $output = $stmt->fetch(mode: PDO::FETCH_ASSOC);
+
+      return $output ? $output : null;
+   }
+
 
     public function register(): bool
     {

@@ -22,7 +22,6 @@ class UserController extends \Core\Controller
          abort(Response::UNAUTHORIZED);
       };
 
-
       $db = new Database(config: Config::database());
       $pdo = $db->connect();
 
@@ -45,8 +44,29 @@ class UserController extends \Core\Controller
    }
 
    // render profile view
-   public function profile()
+   public function profile($userId)
    {
-      dd('Profile page');
+      $userId = (int) $userId;
+
+      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
+
+      $db = new Database(config: Config::database());
+      $pdo = $db->connect();
+
+      $usersModel = new Users(connection: $pdo);
+      $user = $usersModel->findUserById($userId);
+
+      if (! $user) {
+         abort(Response::NOT_FOUND);
+      }
+
+      $this->renderView(
+         path: 'profile/index.view.php',
+         data: [
+            'loggedInUserEmail' => $loggedInUserEmail,
+            'user' => $user,
+            'heading' => "{$user['name']}'s profile"
+         ]
+      );
    }
 }

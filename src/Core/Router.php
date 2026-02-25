@@ -40,20 +40,41 @@ class Router
 
    public function resolve(): void
    {
-      $method = $this->request->getMethod();
+      $httpMethod = $this->request->getMethod();
       $url = $this->request->getUrl();
 
-      $callback = $this->routes[$method][$url] ?? null;
+      $routes = $this->routes[$httpMethod] ?? [];
 
-      if (!$callback) {
-         abort();
+      // Route matching
+      foreach ($routes as $route => $callback) {
+         // Convert route placeholders like {slug} to regex
+         $pattern = preg_replace('/\{[a-zA-Z_]+\}/', '([a-zA-Z0-9_-]+)', $route);
+
+         // Check if the current route matches URI pattern
+         if (preg_match("#^{$pattern}$#", $url, $matches)) {
+            preg_match_all('/\{([a-zA-Z_]+)\}/', $route, $paramNames);
+            array_shift($matches);
+            $params = [];
+
+            foreach ($paramNames[1] as $index => $name) {
+               $params[$name] = $matches[$index] ?? null;
+            }
+
+            $class = $callback[0];
+            $action = $callback[1];
+
+            $controller = new $class();
+
+            if (!is_callable([$controller, $action])) {
+               abort(Response::METHOD_NOT_ALLOWED);
+            }
+
+            $controller->$action(...array_values($params));
+
+            return;
+         }
       }
 
-      $class = $callback[0];
-      $method = $callback[1];
-      $controller = new $class();
-
-      call_user_func([$controller, $method]);
-
+      abort();
    }
 }

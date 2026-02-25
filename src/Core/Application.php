@@ -37,18 +37,17 @@ class Application
       $this->router->post(url: '/login', callback: ['Http\Controllers\LoginController', 'store']);
       $this->router->get(url: '/logout', callback: ['Http\Controllers\LoginController', 'logout']);
 
-      // TODO:
       $this->router->get(url: '/dashboard', callback: ['Http\Controllers\UserController', 'dashboard']);
-      $this->router->get(url: '/profile/{id}', callback: ['Http\Controllers\UserController', 'profile']);
+      $this->router->get(url: '/profile/{userId}', callback: ['Http\Controllers\UserController', 'profile']);
 
       $this->router->get(url: '/habit', callback: ['Http\Controllers\HabitController', 'index']);
       $this->router->post(url: '/habit', callback: ['Http\Controllers\HabitController', 'store']);
-      $this->router->get(url: '/habit/5?', callback: ['Http\Controllers\HabitController', 'show']);
-      $this->router->patch(url: '/habit/{id}', callback: ['Http\Controllers\HabitController', 'patch']);
-      $this->router->put(url: '/habit/{id}', callback: ['Http\Controllers\HabitController', 'put']);
+      $this->router->get(url: '/habit/{habitId}', callback: ['Http\Controllers\HabitController', 'show']);
+      $this->router->patch(url: '/habit/{habitId}', callback: ['Http\Controllers\HabitController', 'patch']);
+      $this->router->put(url: '/habit/{habitId}', callback: ['Http\Controllers\HabitController', 'put']);
 
       $this->router->get(url: '/archived', callback: ['Http\Controllers\HabitController', 'archived']);
-      $this->router->delete(url: '/archived/{id}', callback: ['Http\Controllers\HabitController', 'destroy']);
-      $this->router->patch(url: '/archived/{id}', callback: ['Http\Controllers\HabitController', 'restore']);
+      $this->router->delete(url: '/archived/{habitId}', callback: ['Http\Controllers\HabitController', 'destroy']);
+      $this->router->patch(url: '/archived/{habitId}', callback: ['Http\Controllers\HabitController', 'restore']);
    }
 }
