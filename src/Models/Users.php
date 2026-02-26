@@ -137,7 +137,7 @@ class Users
    }
 
 
-    public function register(): bool
+    public function register(): ?int
     {
         $table = self::TABLE;
         $sql = "INSERT INTO {$table}
@@ -149,7 +149,7 @@ class Users
         $stmt = $this->connection->prepare(query: $sql);
 
         // insert data
-        return $stmt->execute([
+        $success = $stmt->execute([
             ':name' => $this->nameBacking,
             ':surname' => $this->surnameBacking,
             ':age' => $this->ageBacking,
@@ -157,6 +157,13 @@ class Users
             ':password' => $this->passwordBacking,
             ':phone' => $this->phoneBacking
         ]);
-    }
+
+         if ($success) {
+           // return last inserted id
+           return (int) $this->connection->lastInsertId();
+         }
+
+         return null;
+   }
 
 }

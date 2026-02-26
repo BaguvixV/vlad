@@ -53,8 +53,39 @@ ALTER TABLE `habits`
 -- Values for table `habits`
 --
 
-INSERT INTO `habits` (`habit_id`, `user_id`, `category`, `completion`, `title`, `description`, `is_active`) VALUES
-(1, 1, 'health', 1, 'Morning Jog', 'Jog for 30 minutes every morning to improve cardiovascular health.', 1),
-(2, 2, 'productivity', 0, 'Read a Book', 'Finish reading "Atomic Habits" by James Clear to enhance personal development.', 1),
-(3, 3, 'hobby', 0, 'Learn Guitar', 'Practice guitar for at least 20 minutes daily to improve skills.', 0),
-(4, 4, 'work', 1, 'Project Meeting', 'Attend the weekly project meeting to discuss progress and next steps.', 1);
+INSERT INTO `habits` (`user_id`, `category`, `completion`, `title`, `description`, `is_active`) VALUES
+-- ======================
+-- USER 1
+-- ======================
+(1, 'health', 1, 'Morning Jog', 'Jog for 30 minutes every morning to improve cardiovascular health.', 1),
+(1, 'health', 0, 'Drink 2L Water', 'Stay hydrated by drinking at least 2 liters of water daily.', 1),
+(1, 'productivity', 0, 'Plan the Day', 'Write down top 3 priorities every morning.', 1),
+(1, 'mindset', 1, 'Meditate', 'Meditate for 10 minutes to improve focus.', 1),
+(1, 'learning', 0, 'Read 10 Pages', 'Read at least 10 pages of a self-development book.', 1),
+
+-- ======================
+-- USER 2
+-- ======================
+(2, 'productivity', 0, 'Read Atomic Habits', 'Finish reading "Atomic Habits" by James Clear.', 1),
+(2, 'health', 1, 'Gym Workout', 'Strength training session 3 times per week.', 1),
+(2, 'finance', 0, 'Track Expenses', 'Log daily expenses in budgeting app.', 1),
+(2, 'learning', 0, 'Learn PHP', 'Study PHP OOP concepts for 30 minutes.', 1),
+(2, 'mindset', 1, 'Gratitude Journal', 'Write 3 things you are grateful for.', 1),
+
+-- ======================
+-- USER 3
+-- ======================
+(3, 'hobby', 0, 'Learn Guitar', 'Practice guitar for at least 20 minutes daily.', 1),
+(3, 'health', 1, 'Evening Walk', 'Walk 20 minutes after dinner.', 1),
+(3, 'learning', 0, 'Watch Tutorials', 'Watch one development tutorial daily.', 1),
+(3, 'productivity', 0, 'Inbox Zero', 'Clear email inbox before end of day.', 1),
+(3, 'mindset', 1, 'Affirmations', 'Repeat positive affirmations every morning.', 1),
+
+-- ======================
+-- USER 4
+-- ======================
+(4, 'work', 1, 'Project Meeting', 'Attend weekly project meeting.', 1),
+(4, 'health', 0, 'Stretching', 'Stretch for 15 minutes in the morning.', 1),
+(4, 'learning', 0, 'Read Tech Articles', 'Read one tech article per day.', 1),
+(4, 'finance', 1, 'Review Budget', 'Review monthly budget every Sunday.', 1),
+(4, 'productivity', 0, 'Task Review', 'Review tasks at end of day.', 1);

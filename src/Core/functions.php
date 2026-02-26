@@ -20,11 +20,6 @@ function core(string $path): string
    return base_path(path: "src/Core/{$path}");
 }
 
-function controller($path): string
-{
-   return base_path(path: "src/Http/Controllers/{$path}");
-}
-
 function view(string $path): string
 {
    return base_path(path: "src/Views/{$path}");
@@ -37,8 +32,8 @@ function abort(int $status = 404): void
    die();
 }
 
-function redirect(string $path)
+function redirect(string $path): void
 {
    header("Location: {$path}");
-exit();
+   exit();
 }

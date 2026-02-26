@@ -2,6 +2,7 @@
 
 namespace Http\Controllers;
 
+use Core\Auth;
 use Core\Response;
 use Core\Config;
 use Core\Database;
@@ -16,8 +17,6 @@ class HabitController extends \Core\Controller
    // render habit page view
    public function index()
    {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
       $db = new Database(config: Config::database());
       $pdo = $db->connect();
 
@@ -28,7 +27,7 @@ class HabitController extends \Core\Controller
          path: 'habit/index.view.php',
          data: [
             'heading' => 'Create Your Own Habit',
-            'loggedInUserEmail' => $loggedInUserEmail,
+            'loggedInUserEmail' => Auth::email(),
             'habits' => $habits
          ]
       );
@@ -61,14 +60,13 @@ class HabitController extends \Core\Controller
       // on validation error redirect back to page
       if (!$isValid) {
          $errors = $formValidatinModel->errors();
-         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
          // Pass error and old form into the template
          $this->renderView(
             'habit/index.view.php', [
                'old' => $_POST,
                'error' => $errors,
-               'loggedInUserEmail' => $loggedInUserEmail,
+               'loggedInUserEmail' => Auth::email(),
                'heading' => "Create Your Own Habit",
                'generalError' => 'Validation Error!'
             ]
@@ -83,11 +81,8 @@ class HabitController extends \Core\Controller
       $habitsModel->title = $title;
       $habitsModel->description = $description;
 
-      // get user id from logged in user and set to variable to link that on creation
-      $loggedInUserId = $_SESSION['user']['id'] ?? null;
-
       // crete habit for spefific user
-      if ($habitsModel->create(forSpecificUser: $loggedInUserId)) {
+      if ($habitsModel->create(forSpecificUser: Auth::id())) {
          return redirect('/dashboard');
       }
 
@@ -150,20 +145,17 @@ class HabitController extends \Core\Controller
    // show archived habits [possibly to restore some of the habits]
    public function archived()
    {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-      $loggedInUserId = $_SESSION['user']['id'] ?? null;
-
       $db = new Database(config: Config::database());
       $pdo = $db->connect();
 
       $habitsModel = new Habits(connection: $pdo);
-      $habits = $habitsModel->findArchivedUserId(userId: $loggedInUserId);
+      $habits = $habitsModel->findArchivedUserId(userId: Auth::id());
 
       $this->renderView(
          path: 'habit/archived.view.php',
          data: [
             'heading' => 'Archived Habits',
-            'loggedInUserEmail' => $loggedInUserEmail,
+            'loggedInUserEmail' => Auth::email(),
             'habits' => $habits
          ]
       );
@@ -197,8 +189,6 @@ class HabitController extends \Core\Controller
    // habit update functionality
    public function put($habitId)
    {
-      $loggedInUserId = $_SESSION['user']['id'] ?? null;
-
       $habitId = (int) $habitId;
 
       // method Check (POST only with PUT method spoof)
@@ -217,7 +207,7 @@ class HabitController extends \Core\Controller
       $habit = $habit[0];
 
       // check ownership
-      if ($habit['user_id'] !== $loggedInUserId) {
+      if ($habit['user_id'] !== Auth::id()) {
          abort(status: Response::FORBIDDEN); // only owner can edit
       }
 
@@ -233,14 +223,13 @@ class HabitController extends \Core\Controller
 
       if (!$isValid) {
          $errors = $formValidatinModel->errors();
-         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
          // Pass error and old form into the template
          $this->renderView(
             'habit/show.view.php', [
                'old' => $_POST,
                'error' => $errors,
-               'loggedInUserEmail' => $loggedInUserEmail,
+               'loggedInUserEmail' => Auth::email(),
                'habit' => $habit,
                'heading' => "Editing Habit",
                'generalError' => 'Validation Error!'
@@ -271,10 +260,7 @@ class HabitController extends \Core\Controller
    {
       $habitId = (int) $habitId;
 
-      $loggedInUserId = $_SESSION['user']['id'] ?? null;
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
-      if (!$loggedInUserEmail || !$loggedInUserEmail) {
+      if (!Auth::email() || !Auth::id()) {
          abort(status: Response::UNAUTHORIZED);
       }
 
@@ -290,14 +276,14 @@ class HabitController extends \Core\Controller
          $habit = $habit[0];
       }
 
-      if ($habit['user_id'] !== $loggedInUserId) {
+      if ($habit['user_id'] !== Auth::id()) {
          abort(status: Response::FORBIDDEN);
       }
 
       $this->renderView(
          path: 'habit/show.view.php',
          data: [
-            'loggedInUserEmail' => $loggedInUserEmail,
+            'loggedInUserEmail' => Auth::email(),
             'habit' => $habit,
             'heading' => "Habit Nr.{$habitId}"
          ]

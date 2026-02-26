@@ -2,6 +2,7 @@
 
 namespace Http\Controllers;
 
+use Core\Auth;
 use Core\Response;
 use Core\Config;
 use Core\Database;
@@ -15,13 +16,11 @@ class LoginController extends \Core\Controller
    // render login page view
    public function index()
    {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
       $this->renderView(
          path: 'auth/login/index.view.php',
          data: [
             'heading' => 'Login Page',
-            'loggedInUserEmail' => $loggedInUserEmail
+            'loggedInUserEmail' => Auth::email()
          ]
       );
    }
@@ -54,14 +53,13 @@ class LoginController extends \Core\Controller
          session_destroy();
 
          $error = $formValidatinModel->errors();
-         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
          $this->renderView(
             path: 'auth/login/index.view.php',
             data: [
                'old' => $_POST,
                'error' => $error,
-               'loggedInUserEmail' => $loggedInUserEmail,
+               'loggedInUserEmail' => Auth::email(),
                'heading' => 'Login Page',
                'generalError' => 'Validation Error!'
             ]
@@ -79,16 +77,9 @@ class LoginController extends \Core\Controller
          $legitPassword = password_verify($password, $user['password']);
 
          if ($legitPassword) {
+            Auth::login(id: $user['user_id'], email: $user['email']);
 
-            $_SESSION['user'] = [
-               'id' => $user['user_id'],
-               'name' => $user['name'],
-               'email' => $user['email'],
-               'is_active' => $user['is_active'],
-            ];
-
-            header('Location: /dashboard');
-            exit();
+            redirect('/dashboard');
          }
       }
 
@@ -97,13 +88,11 @@ class LoginController extends \Core\Controller
 
       session_destroy();
 
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
-      renderView(
+      $this->renderView(
          path: 'auth/login/index.view.php',
          data: [
             'old' => $_POST,
-            'loggedInUserEmail' => $loggedInUserEmail,
+            'loggedInUserEmail' => Auth::email(),
             'heading' => 'Login Page',
             'generalError' => 'No matching account found for that email address and password'
          ]
@@ -117,14 +106,8 @@ class LoginController extends \Core\Controller
    // user logout functionality
    public function logout()
    {
-      // Logout by clearing session superglobal, destroy file and deleting cookie
-      $_SESSION = [];
-      session_destroy();
+      Auth::logout();
 
-      $params = session_get_cookie_params();
-      setcookie('PHPSESSID', '', time() - 3000, $params['path'], $params['domain'], $params['secure'], $params['httponly']);
-
-      header('Location: /login');
-      exit();
+      redirect('/login');
    }
 }

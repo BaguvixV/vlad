@@ -2,6 +2,7 @@
 
 namespace Http\Controllers;
 
+use Core\Auth;
 use Core\Config;
 use Core\Database;
 use Core\Response;
@@ -14,11 +15,8 @@ class UserController extends \Core\Controller
    // render dashboard view
    public function dashboard()
    {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-      $loggedInUserID = $_SESSION['user']['id'] ?? null;
-
       // Check logged-in user for allowance to see page content
-      if (!$loggedInUserEmail) {
+      if (!Auth::email()) {
          abort(Response::UNAUTHORIZED);
       };
 
@@ -28,13 +26,13 @@ class UserController extends \Core\Controller
       $usersModel = new Users(connection: $pdo);
       $habitsModel = new Habits(connection: $pdo);
 
-      $user = $usersModel->findUserByEmail(localEmail: $loggedInUserEmail);
-      $habits = $habitsModel->findByUserId(userId: $loggedInUserID);
+      $user = $usersModel->findUserByEmail(localEmail: Auth::email());
+      $habits = $habitsModel->findByUserId(userId: Auth::id());
 
       $this->renderView(
          path: 'dashboard/index.view.php',
          data: [
-            'loggedInUserEmail' => $loggedInUserEmail,
+            'loggedInUserEmail' => Auth::email(),
             'user' => $user,
             'habits' => $habits,
             'username' => $user['name'],
@@ -47,8 +45,6 @@ class UserController extends \Core\Controller
    public function profile($userId)
    {
       $userId = (int) $userId;
-
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
       $db = new Database(config: Config::database());
       $pdo = $db->connect();
@@ -63,7 +59,7 @@ class UserController extends \Core\Controller
       $this->renderView(
          path: 'profile/index.view.php',
          data: [
-            'loggedInUserEmail' => $loggedInUserEmail,
+            'loggedInUserEmail' => Auth::email(),
             'user' => $user,
             'heading' => "{$user['name']}'s profile"
          ]

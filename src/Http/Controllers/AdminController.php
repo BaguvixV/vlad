@@ -2,6 +2,7 @@
 
 namespace Http\Controllers;
 
+use Core\Auth;
 use Core\Config;
 use Core\Database;
 use Models\Users;
@@ -12,8 +13,6 @@ class AdminController extends \Core\Controller
    // render about page view
    public function index()
    {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
       $db = new Database(Config::Database());
       $pdo = $db->connect();
 
@@ -24,7 +23,7 @@ class AdminController extends \Core\Controller
          path: 'admin/index.view.php',
          data: [
             'heading' => 'Admin page',
-            'loggedInUserEmail' => $loggedInUserEmail,
+            'loggedInUserEmail' => Auth::email(),
             'users' => $users
          ]
       );

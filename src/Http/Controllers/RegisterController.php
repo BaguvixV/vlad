@@ -2,9 +2,7 @@
 
 namespace Http\Controllers;
 
-use Core\Controller;
-
-// Rest `use` are for store function
+use Core\Auth;
 use Core\Response;
 use Core\Config;
 use Core\Database;
@@ -13,19 +11,17 @@ use Http\Requests\RegisterForm;
 use Core\Sanitize;
 
 
-class RegisterController extends Controller
+class RegisterController extends \Core\Controller
 {
 
    // render register page view
    public function index()
    {
-      $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
       $this->renderView(
          path: 'auth/register/index.view.php',
          data: [
             'heading' => 'Register Page',
-            'loggedInUserEmail' => $loggedInUserEmail
+            'loggedInUserEmail' => Auth::email()
          ]
       );
    }
@@ -60,14 +56,13 @@ class RegisterController extends Controller
 
       if (!$isValid) {
          $errors = $formValidatinModel->errors();
-         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
 
          // Pass error and old form into the template
          $this->renderView(
             'auth/register/index.view.php', [
                'old' => $_POST,
                'error' => $errors,
-               'loggedInUserEmail' => $loggedInUserEmail,
+               'loggedInUserEmail' => Auth::email(),
                'heading' => "Register Page",
                'generalError' => 'Validation Error!'
             ]
@@ -77,10 +72,16 @@ class RegisterController extends Controller
          return;
       }
 
-      // Hash password
-      $password_hash = password_hash($password, PASSWORD_DEFAULT);
+      // Hash password based on local or production app statuses
+      if ($_ENV['APP_ENV'] === 'local') {
+         // Hash password (production UNSAFE but good as long as it is for development for faster password hashing time)
+         $password_hash = password_hash($password, PASSWORD_DEFAULT, ['cost' => 4]);
+      } else {
+         // Hash password (production safe)
+         $password_hash = password_hash($password, PASSWORD_DEFAULT);
+      }
 
-      // Convert age sanitizez number format inside string as an strict integer
+      // Convert age sanitizes number format inside string as an strict integer
       $age_int = (int)$age;
 
       $existingUserByProvidedEmil = $userModel->findUserByEmail(localEmail: $email);
@@ -88,14 +89,12 @@ class RegisterController extends Controller
       $existingUserByProvidedPhone = $userModel->findUserByPhone(localPhone: $phone);
 
       if ($existingUserByProvidedEmil) {
-         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
          // Pass error and old form into the template
          $this->renderView(
             'auth/register/index.view.php', [
                'old' => $_POST,
                'heading' => "Register Page",
-               'loggedInUserEmail' => $loggedInUserEmail,
+               'loggedInUserEmail' => Auth::email(),
                'generalError' => 'Someone is already using this e-mail address'
             ]
          );
@@ -105,13 +104,11 @@ class RegisterController extends Controller
       }
 
       if ($existingUserByProvidedPhone) {
-         $loggedInUserEmail = $_SESSION['user']['email'] ?? null;
-
          // Pass error and old form into the template
          $this->renderView(
             'auth/register/index.view.php', [
                'old' => $_POST,
-               'loggedInUserEmail' => $loggedInUserEmail,
+               'loggedInUserEmail' => Auth::email(),
                'heading' => "Register Page",
                'generalError' => 'Someone is already using this phone number'
             ]
@@ -129,20 +126,13 @@ class RegisterController extends Controller
       $userModel->password = $password_hash;
       $userModel->phone = $phone;
 
+      $userId = $userModel->register();
+
       // Create / Register user
-      if ($userModel->register()) {
+      if ($userId) {
+         Auth::login(id: $userId, email: $email);
 
-         $createdUserInfo = $userModel->findUserByEmail($userModel->email);
-
-         $_SESSION['user'] = [
-            'id' => $createdUserInfo['user_id'],
-            'name' => $createdUserInfo['name'],
-            'email' => $createdUserInfo['email'],
-            'is_active' => $createdUserInfo['is_active'],
-         ];
-
-         header('Location: /dashboard');
-         exit();
+         redirect('/dashboard');
 
       }
 

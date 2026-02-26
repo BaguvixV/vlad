@@ -13,12 +13,32 @@
 
 ---
 
-## 📅 26/02/26 - Planned
-### COMMIT
+## 📅 27/02/26 - Planned
+### 2nd COMMIT
 ```bash
 feat: Display only habits with checkboxes on dashboard
 ```
+### 1st COMMIT
+```bash
+pref: Use lazy loading for habits and user model
+```
+---
 
+
+## 📅 26/02/26 🛠️
+###  COMMIT
+```bash
+refactor: Auth abstraction, controller cleanup, user/habit setup improvement, and DB defaults improvement
+
+- Created Core\Auth.php abstraction to avoid re-entering $_SESSION['user'] multiple times per request
+- Removed redundand second findUserByEmail method from user model inside RegisterController
+- Retrieved user_id directly from PDO using lastInsertId() call inside RegisterController
+- Removed unused controller() helper from Core\functions.php
+- Decreased password_hash generating loading speed (TEMPORARILY / not for production)
+- Removed habit_id from insert SQL as it is automatically added on habit creation
+- Setted hashed password, for default development test users, instead of fixed ones that does not work when trying to login
+- Implemented more default data inside habits table
+```
 ---
 
 
