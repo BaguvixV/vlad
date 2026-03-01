@@ -30,12 +30,12 @@ class Application
 
       $this->router->get(url: '/4dm1n', callback: ['Http\Controllers\AdminController', 'index']);
 
-      $this->router->get(url: '/register', callback: ['Http\Controllers\RegisterController', 'index']);
-      $this->router->post(url: '/register', callback: ['Http\Controllers\RegisterController', 'store']);
+      $this->router->get(url: '/register', callback: ['Http\Controllers\AuthController', 'showRegister']);
+      $this->router->post(url: '/register', callback: ['Http\Controllers\AuthController', 'register']);
 
-      $this->router->get(url: '/login', callback: ['Http\Controllers\LoginController', 'index']);
-      $this->router->post(url: '/login', callback: ['Http\Controllers\LoginController', 'store']);
-      $this->router->get(url: '/logout', callback: ['Http\Controllers\LoginController', 'logout']);
+      $this->router->get(url: '/login', callback: ['Http\Controllers\AuthController', 'showLogin']);
+      $this->router->post(url: '/login', callback: ['Http\Controllers\AuthController', 'login']);
+      $this->router->get(url: '/logout', callback: ['Http\Controllers\AuthController', 'logout']);
 
       $this->router->get(url: '/dashboard', callback: ['Http\Controllers\UserController', 'dashboard']);
       $this->router->get(url: '/profile/{userId}', callback: ['Http\Controllers\UserController', 'profile']);
