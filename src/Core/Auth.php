@@ -14,12 +14,18 @@ class Auth
       return $_SESSION['user']['email'] ?? null;
    }
 
-   public static function login(int $id, string $email): void
+   public static function role(): ?string
+   {
+      return $_SESSION['user']['role'] ?? null;
+   }
+
+   public static function login(string $role, int $id, string $email): void
    {
       // regenerate session id after each login
       session_regenerate_id(true);
 
       $_SESSION['user'] = [
+         'role' => $role,
          'id' => $id,
          'email' => $email
       ];

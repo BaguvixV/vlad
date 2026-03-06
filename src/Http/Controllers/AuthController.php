@@ -64,11 +64,11 @@ class AuthController extends \Core\Controller
       $user = $usersModel->findUserByEmail(localEmail: $email);
 
       // check if provided user exists and if so then check if password is legit. If both criteria is true then successfully log in
-      if ($user) {
+      if ($user && $user['email'] !== 'pinkman@gmail.com') {
          $legitPassword = password_verify($password, $user['password']);
 
          if ($legitPassword) {
-            Auth::login(id: $user['user_id'], email: $user['email']);
+            Auth::login(role: 'user', id: $user['user_id'], email: $user['email']);
 
             redirect('/dashboard');
          }
@@ -203,7 +203,7 @@ class AuthController extends \Core\Controller
 
       // Create / Register user
       if ($userId) {
-         Auth::login(id: $userId, email: $email);
+         Auth::login(role: 'user', id: $userId, email: $email);
 
          redirect('/dashboard');
 

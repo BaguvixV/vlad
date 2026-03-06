@@ -28,7 +28,9 @@ class Application
       $this->router->get(url: '/', callback: ['Http\Controllers\HomeController', 'index']);
       $this->router->get(url: '/about', callback: ['Http\Controllers\AboutController', 'index']);
 
-      $this->router->get(url: '/4dm1n', callback: ['Http\Controllers\AdminController', 'index']);
+      $this->router->get(url: '/admin', callback: ['Http\Controllers\AdminController', 'index']);
+      $this->router->post(url: '/admin', callback: ['Http\Controllers\AdminController', 'login']);
+      $this->router->get(url: '/admin/dashboard', callback: ['Http\Controllers\UserController', 'adminDashboard']);
 
       $this->router->get(url: '/register', callback: ['Http\Controllers\AuthController', 'showRegister']);
       $this->router->post(url: '/register', callback: ['Http\Controllers\AuthController', 'register']);
@@ -37,8 +39,8 @@ class Application
       $this->router->post(url: '/login', callback: ['Http\Controllers\AuthController', 'login']);
       $this->router->get(url: '/logout', callback: ['Http\Controllers\AuthController', 'logout']);
 
-      $this->router->get(url: '/dashboard', callback: ['Http\Controllers\UserController', 'dashboard']);
-      $this->router->get(url: '/profile/{userId}', callback: ['Http\Controllers\UserController', 'profile']);
+      $this->router->get(url: '/dashboard', callback: ['Http\Controllers\UserController', 'userDashboard']);
+      $this->router->get(url: '/profile/{userId}', callback: ['Http\Controllers\UserController', 'publicUserProfile']);
 
       $this->router->get(url: '/habit', callback: ['Http\Controllers\HabitController', 'index']);
       $this->router->post(url: '/habit', callback: ['Http\Controllers\HabitController', 'store']);

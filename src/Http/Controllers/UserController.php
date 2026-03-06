@@ -8,7 +8,7 @@ use Core\Response;
 class UserController extends \Core\Controller
 {
    // render dashboard view
-   public function dashboard()
+   public function userDashboard()
    {
       // Check logged-in user for allowance to see page content
       if (!Auth::email()) {
@@ -34,7 +34,7 @@ class UserController extends \Core\Controller
    }
 
    // render profile view
-   public function profile($userId)
+   public function publicUserProfile($userId)
    {
       $userId = (int) $userId;
 
@@ -52,6 +52,37 @@ class UserController extends \Core\Controller
             'loggedInUserEmail' => Auth::email(),
             'user' => $user,
             'heading' => "{$user['name']}'s profile"
+         ]
+      );
+   }
+
+   public function adminDashboard()
+   {
+      // Check logged-in user for allowance to see page content
+      if (!Auth::email()) {
+         abort(Response::UNAUTHORIZED);
+      };
+
+      if(Auth::role() !== 'admin') {
+         abort(Response::FORBIDDEN);
+      }
+
+      $usersModel = $this->usersModel();
+      $habitsModel = $this->habitsModel();
+
+      $user = $usersModel->findUserByEmail(localEmail: Auth::email());
+      $users = $usersModel->read();
+      $habits = $habitsModel->findByUserId(userId: Auth::id());
+
+      $this->renderView(
+         path: 'admin/show.view.php',
+         data: [
+            'loggedInUserEmail' => Auth::email(),
+            'user' => $user,
+            'users' => $users,
+            'habits' => $habits,
+            'username' => $user['name'],
+            'heading' => "{$user['name']}'s extras"
          ]
       );
    }

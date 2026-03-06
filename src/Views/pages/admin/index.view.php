@@ -10,22 +10,37 @@
 
 <?php require view(path: 'components/navigation.view.php'); ?>
 
+<h2>Admin Login Form</h2>
 
-<h2>User list</h2>
-<h3>Users (placeholder) in the system</h3>
 
-<?php foreach ($users as $user): ?>
-    <p>Created At: <?= htmlspecialchars($user['created_at']); ?></p>
-    <p>Name: <?= htmlspecialchars($user['name']); ?></p>
-    <p>Surname: <?= htmlspecialchars($user['surname']); ?></p>
-    <p>Age: <?= htmlspecialchars($user['age']); ?></p>
-    <p>Email: <?= htmlspecialchars($user['email']); ?></p>
-    <p>Password: <?= htmlspecialchars($user['password']); ?></p>
-    <p>Phone: <?= htmlspecialchars($user['phone']); ?></p>
-    <p>Bio: <?= $user['bio'] ? htmlspecialchars($user['bio']) : 'empty placeholder'; ?></p>
-    <p>Is Active: <?= htmlspecialchars($user['is_active']); ?></p>
-    <hr>
-<?php endforeach; ?>
+<form action="/admin" method="POST">
+
+    <?php if (isset($generalError)) : ?>
+        <p style="color:red;font-weight:bold;font-style: italic;"><?= $generalError; ?></p>
+    <?php endif; ?>
+
+    <?php if (isset($error['email'])) : ?>
+        <p style="color:red;font-weight:bold;font-style: italic;"><?= $error['email']; ?></p>
+    <?php endif; ?>
+    <div>
+        <label for="email">Email</label>
+        <input type="text" name="email" value="<?= $old['email'] ?? ''; ?>">
+    </div>
+
+    <?php if (isset($error['password'])) : ?>
+        <p style="color:red;font-weight:bold;font-style: italic;"><?= $error['password']; ?></p>
+    <?php endif; ?>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password">
+    </div>
+
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+<hr>
 
 
 <?php require view(path: 'components/footer.view.php'); ?>

@@ -15,3 +15,6 @@ README.test.md
 
 # Ignore vscode directory
 .vscode
+
+# intellij configs
+.idea/
