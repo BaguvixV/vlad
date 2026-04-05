@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types= 1);
+declare(strict_types=1);
 
 // session_start();
 if (session_status() === PHP_SESSION_NONE) {
-  session_start();
+    session_start();
 }
 
 // BASE_PATH points to project root inside container

@@ -19,57 +19,49 @@ class Users
 
     public function __construct(private ?PDO $connection = null)
     {
-        // intentionaly empty (PHP 8.0 feature that allows Constructor Property Promotion)
+        // intentionally empty (PHP 8.0 feature that allows Constructor Property Promotion)
     }
 
-    // Property Hooks feature below (intorduced in PHP 8.4)
-    public string $name
-        {
-            get => $this->nameBacking ?? 'empy placeholder';
-            set => $this->nameBacking = ucfirst(string: strtolower(string: $value));
-        }
+    // Property Hooks feature below (introduced in PHP 8.4)
+    public string $name {
+        get => $this->nameBacking ?? 'empty placeholder';
+        set => $this->nameBacking = ucfirst(string: strtolower(string: $value));
+    }
 
-    public string $surname
-        {
-            get => $this->surnameBacking ?? 'empy placeholder';
-            set => $this->surnameBacking = ucfirst(string: strtolower(string: $value));
-        }
+    public string $surname {
+        get => $this->surnameBacking ?? 'empty placeholder';
+        set => $this->surnameBacking = ucfirst(string: strtolower(string: $value));
+    }
 
-    public int $age
-        {
-            get => $this->ageBacking ?? 'empy placeholder';
-            set => $this->ageBacking = $value;
-        }
+    public int $age {
+        get => $this->ageBacking ?? 'empty placeholder';
+        set => $this->ageBacking = $value;
+    }
 
-    public string $email
-        {
-            get => $this->emailBacking ?? 'empy placeholder';
-            set => $this->emailBacking = strtolower(string: $value);
-        }
+    public string $email {
+        get => $this->emailBacking ?? 'empty placeholder';
+        set => $this->emailBacking = strtolower(string: $value);
+    }
 
-    public string $password
-        {
-            get => $this->passwordBacking ?? 'empy placeholder';
-            set => $this->passwordBacking = $value;
-        }
+    public string $password {
+        get => $this->passwordBacking ?? 'empty placeholder';
+        set => $this->passwordBacking = $value;
+    }
 
-    public string $phone
-        {
-            get => $this->phoneBacking ?? 'empy placeholder';
-            set => $this->phoneBacking = $value;
-        }
+    public string $phone {
+        get => $this->phoneBacking ?? 'empty placeholder';
+        set => $this->phoneBacking = $value;
+    }
 
-    public string $bio
-        {
-            get => $this->bioBacking ?? 'empy placeholder';
-            set => $this->bioBacking = $value;
-        }
+    public string $bio {
+        get => $this->bioBacking ?? 'empty placeholder';
+        set => $this->bioBacking = $value;
+    }
 
-    public bool $isActive
-        {
-            get => $this->isActiveBacking ?? 'empy placeholder';
-            set => $this->isActiveBacking = (bool)$value;
-        }
+    public bool $isActive {
+        get => $this->isActiveBacking ?? 'empty placeholder';
+        set => $this->isActiveBacking = (bool)$value;
+    }
 
 
     public function read(): array
@@ -119,22 +111,22 @@ class Users
         return $output ? $output : null;
     }
 
-   public function findUserById(int|null $value): array|null
-   {
-      $table = self::TABLE;
-      $sql = "SELECT *
+    public function findUserById(int|null $value): array|null
+    {
+        $table = self::TABLE;
+        $sql = "SELECT *
             FROM {$table}
             WHERE user_id = :id
     ";
 
-      $stmt = $this->connection->prepare(query: $sql);
-      $stmt->bindParam(':id', $value);
-      $stmt->execute();
+        $stmt = $this->connection->prepare(query: $sql);
+        $stmt->bindParam(':id', $value);
+        $stmt->execute();
 
-      $output = $stmt->fetch(mode: PDO::FETCH_ASSOC);
+        $output = $stmt->fetch(mode: PDO::FETCH_ASSOC);
 
-      return $output ? $output : null;
-   }
+        return $output ? $output : null;
+    }
 
 
     public function register(): ?int
@@ -158,12 +150,11 @@ class Users
             ':phone' => $this->phoneBacking
         ]);
 
-         if ($success) {
-           // return last inserted id
-           return (int) $this->connection->lastInsertId();
-         }
+        if ($success) {
+            // return last inserted id
+            return (int) $this->connection->lastInsertId();
+        }
 
-         return null;
-   }
-
+        return null;
+    }
 }
